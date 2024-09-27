@@ -14,5 +14,6 @@ public class Task {
     @Id
     private String id;
     private String nameTask;
-    private String descripcionTarea;
+    private String descriptionTask;
+    private Boolean isCompleted;
 }
