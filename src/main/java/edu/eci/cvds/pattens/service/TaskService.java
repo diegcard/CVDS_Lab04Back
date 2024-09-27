@@ -35,7 +35,7 @@ public class TaskService {
      * @return a list of all tasks
      */
     public List<Task> getAllTasks() {
-        
+
         return taskRepository.findAll();
 
     }
