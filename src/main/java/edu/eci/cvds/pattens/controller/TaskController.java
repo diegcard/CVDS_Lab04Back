@@ -27,7 +27,7 @@ public class TaskController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error getting tasks");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class TaskController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.getTaskById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error getting task, task not found");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
