@@ -4,6 +4,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * This class is in charge of representing the task entity.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class is in charge of managing the tasks repository, when the repository is a text file
+ */
 @Repository
 public class TaskTextRepository implements TaskRepository{
 
@@ -24,6 +27,12 @@ public class TaskTextRepository implements TaskRepository{
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Save and create a new task
+     * @param task the task to create
+     * if the task does not have an ID, it is generated
+     * @return the created task
+     */
     @Override
     public Task saveTask(Task task) {
         List<Task> tasks = findAllTasks();
@@ -35,14 +44,29 @@ public class TaskTextRepository implements TaskRepository{
         return task;
     }
 
+    /**
+     * Find a task by its ID
+     * if the task does not exist, throw an exception
+     * @param id the ID of the task
+     * @return the task if found, otherwise null
+     */
     @Override
     public Task findTaskById(String id) {
+        //If task is not found, throw an exception
+        if(!existsById(id)){
+            throw new RuntimeException("Task not found");
+        }
         return findAllTasks().stream()
                 .filter(task -> task.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
+
+    /**
+     * Find all existing tasks in the repository
+     * @return a list of all tasks
+     */
     @Override
     public List<Task> findAllTasks() {
         try {
@@ -58,13 +82,25 @@ public class TaskTextRepository implements TaskRepository{
         }
     }
 
+    /**
+     * Delete a task from the repository
+     * if the task does not exist, throw an exception
+     * @param task the task to delete
+     */
     @Override
     public void deleteTask(Task task) {
         List<Task> tasks = findAllTasks();
+        if (!tasks.removeIf(t -> t.getId().equals(task.getId()))) {
+            throw new RuntimeException("Task not found");
+        }
         tasks.removeIf(t -> t.getId().equals(task.getId()));
         writeTasksToFile(tasks);
     }
 
+    /**
+     * Update an existing task
+     * @param task the task to update
+     */
     @Override
     public void updateTask(Task task) {
         List<Task> tasks = findAllTasks();
@@ -77,11 +113,20 @@ public class TaskTextRepository implements TaskRepository{
         writeTasksToFile(tasks);
     }
 
+    /**
+     * Check if a task exists in the repository
+     * @param id the ID of the task
+     * @return true if the task exists, otherwise false
+     */
     @Override
     public boolean existsById(String id) {
         return findAllTasks().stream().anyMatch(task -> task.getId().equals(id));
     }
 
+    /**
+     * Write the tasks to the file
+     * @param tasks the tasks to write
+     */
     private void writeTasksToFile(List<Task> tasks) {
         try {
             objectMapper.writeValue(new File(FILE_PATH), tasks);

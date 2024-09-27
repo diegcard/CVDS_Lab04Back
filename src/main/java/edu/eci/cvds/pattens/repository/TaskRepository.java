@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * This interface is in charge of managing the tasks repository,
+ * its allow to save, find, delete, update and check if a task exists.
+ */
 @Component
 public interface TaskRepository{
     Task saveTask(Task task);
