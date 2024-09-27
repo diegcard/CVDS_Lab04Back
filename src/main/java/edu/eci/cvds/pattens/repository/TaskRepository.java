@@ -16,6 +16,6 @@ public interface TaskRepository{
     Task findTaskById(String id);
     List<Task> findAllTasks();
     void deleteTask(Task task);
-    void updateTask(Task task);
+    Task updateTask(Task task);
     boolean existsById(String id);
 }

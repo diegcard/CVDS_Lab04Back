@@ -26,6 +26,10 @@ public class TaskService {
      * @return the task if found, otherwise null
      */
     public Task getTaskById(String id) {
+        //If task is not found, throw an exception
+        if (!taskRepository.existsById(id)) {
+            throw new RuntimeException("Task not found");
+        }
         return taskRepository.findTaskById(id);
     }
 
@@ -50,6 +54,10 @@ public class TaskService {
     @Transactional
     public Task createTask(Task task) throws Exception {
         try {
+            //if the id lready exists, throw an exception
+            if (taskRepository.existsById(String.valueOf(task.getId()))) {
+                throw new DataIntegrityViolationException("Task already exists");
+            }
             return taskRepository.saveTask(task);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("Task already exists");
@@ -71,7 +79,7 @@ public class TaskService {
     public Task updateTask(Task task) throws Exception {
         try {
             if (taskRepository.existsById(String.valueOf(task.getId()))) {
-                return taskRepository.saveTask(task);
+                return taskRepository.updateTask(task);
             } else {
                 throw new Exception("Task not found");
             }
@@ -99,13 +107,13 @@ public class TaskService {
      * @param id the ID of the task to change to completed
      * @return the task changed to completed
      */
-    public Task changeToCompleted(String id) {
+    public Task doneTask(String id) {
         Task task = getTaskById(id);
         if(task.getIsCompleted()){
             return task;
         }
         task.setIsCompleted(true);
-        return taskRepository.saveTask(task);
+        return taskRepository.updateTask(task);
     }
 
     /**
@@ -113,12 +121,12 @@ public class TaskService {
      * @param id the ID of the task to change to not completed
      * @return the task changed to not completed
      */
-    public Task changeToNotCompleted(String id) {
+    public Task undoneTask(String id) {
         Task task = getTaskById(id);
         if (!task.getIsCompleted()) {
             return task;
         }
         task.setIsCompleted(false);
-        return taskRepository.saveTask(task);
+        return taskRepository.updateTask(task);
     }
 }

@@ -20,6 +20,7 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
      */
     @Override
     public default Task saveTask(Task task){
+        task.setIsCompleted(false);
         if(task.getId() == null){
             task.setId(java.util.UUID.randomUUID().toString());
         }
@@ -58,10 +59,6 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
      */
     @Override
     public default Task findTaskById(String id){
-        //if task is not found, throw an exception
-        if(!existsById(id)){
-            throw new RuntimeException("Task not found");
-        }
         return findById(id).orElse(null);
     }
 
@@ -71,11 +68,12 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
      * @param task the task to update
      */
     @Override
-    public default void updateTask(Task task){
+    public default Task updateTask(Task task){
         if(!existsById(task.getId())){
             throw new RuntimeException("Task not found");
         }
         save(task);
+        return task;
     }
 
 
@@ -86,6 +84,7 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
      */
     @Override
     public default boolean existsById(String id){
-        return existsById(id);
+        Task task = findById(id).orElse(null);
+        return task != null;
     }
 }
