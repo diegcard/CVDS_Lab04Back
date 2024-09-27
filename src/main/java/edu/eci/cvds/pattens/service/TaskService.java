@@ -26,7 +26,7 @@ public class TaskService {
      * @return the task if found, otherwise null
      */
     public Task getTaskById(String id) {
-        return taskRepository.findById(id).orElse(null);
+        return taskRepository.findTaskById(id);
     }
 
     /**
@@ -35,8 +35,8 @@ public class TaskService {
      * @return a list of all tasks
      */
     public List<Task> getAllTasks() {
-
-        return taskRepository.findAll();
+        
+        return taskRepository.findAllTasks();
 
     }
 
@@ -50,7 +50,7 @@ public class TaskService {
     @Transactional
     public Task createTask(Task task) throws Exception {
         try {
-            return taskRepository.save(task);
+            return taskRepository.saveTask(task);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("Task already exists");
         } catch (TransactionSystemException e) {
@@ -71,7 +71,7 @@ public class TaskService {
     public Task updateTask(Task task) throws Exception {
         try {
             if (taskRepository.existsById(String.valueOf(task.getId()))) {
-                return taskRepository.save(task);
+                return taskRepository.saveTask(task);
             } else {
                 throw new Exception("Task not found");
             }
@@ -90,6 +90,7 @@ public class TaskService {
      * @param id the ID of the task to delete
      */
     public void deleteTask(String id) {
-        taskRepository.deleteById(id);
+        Task task = getTaskById(id);
+        taskRepository.deleteTask(task);
     }
 }

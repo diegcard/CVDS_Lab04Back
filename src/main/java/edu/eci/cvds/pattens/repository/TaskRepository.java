@@ -2,9 +2,16 @@ package edu.eci.cvds.pattens.repository;
 
 import edu.eci.cvds.pattens.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-@Repository
-public interface TaskRepository extends MongoRepository<Task, String> {
+import java.util.List;
 
+@Component
+public interface TaskRepository{
+    Task saveTask(Task task);
+    Task findTaskById(String id);
+    List<Task> findAllTasks();
+    void deleteTask(Task task);
+    void updateTask(Task task);
+    boolean existsById(String id);
 }
