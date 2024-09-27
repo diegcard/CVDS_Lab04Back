@@ -93,4 +93,32 @@ public class TaskService {
         Task task = getTaskById(id);
         taskRepository.deleteTask(task);
     }
+
+    /**
+     * Change to completed a task by its ID.
+     * @param id the ID of the task to change to completed
+     * @return the task changed to completed
+     */
+    public Task changeToCompleted(String id) {
+        Task task = getTaskById(id);
+        if(task.getIsCompleted()){
+            return task;
+        }
+        task.setIsCompleted(true);
+        return taskRepository.saveTask(task);
+    }
+
+    /**
+     * Change to not completed a task by its ID.
+     * @param id the ID of the task to change to not completed
+     * @return the task changed to not completed
+     */
+    public Task changeToNotCompleted(String id) {
+        Task task = getTaskById(id);
+        if (!task.getIsCompleted()) {
+            return task;
+        }
+        task.setIsCompleted(false);
+        return taskRepository.saveTask(task);
+    }
 }

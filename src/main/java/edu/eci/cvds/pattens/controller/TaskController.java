@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * this class is the controller for the tasks of the application
+ */
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = "*")
@@ -14,10 +17,11 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
-
+    /**
+     * this method is in charge of returning a task by its id
+     *
+     * @return
+     */
     @GetMapping("/all")
     public ResponseEntity<?> getAllTasks() {
         try {
@@ -27,6 +31,12 @@ public class TaskController {
         }
     }
 
+    /**
+     * this method is in charge of create a new task in the application
+     * calling the service
+     * @param task
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         try {
