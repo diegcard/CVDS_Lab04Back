@@ -36,6 +36,7 @@ public class TaskTextRepository implements TaskRepository{
     @Override
     public Task saveTask(Task task) {
         List<Task> tasks = findAllTasks();
+        task.setIsCompleted(false);
         if (task.getId() == null) {
             task.setId(UUID.randomUUID().toString());
         }
@@ -102,15 +103,18 @@ public class TaskTextRepository implements TaskRepository{
      * @param task the task to update
      */
     @Override
-    public void updateTask(Task task) {
+    public Task updateTask(Task task) {
         List<Task> tasks = findAllTasks();
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId().equals(task.getId())) {
-                tasks.set(i, task);
+        for (Task t : tasks) {
+            if (t.getId().equals(task.getId())) {
+                t.setNameTask(task.getNameTask());
+                t.setIsCompleted(task.getIsCompleted());
+                t.setDescriptionTask(task.getDescriptionTask());
                 break;
             }
         }
         writeTasksToFile(tasks);
+        return task;
     }
 
     /**
