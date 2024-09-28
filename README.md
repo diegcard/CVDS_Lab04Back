@@ -49,19 +49,19 @@ El sistema permitirá al usuario elegir el método de almacenamiento de la base 
 
 - **Archivo plano en JSON**: Los datos se guardarán en un archivo local con formato JSON. Este formato es ligero y fácil de manejar, lo que lo hace adecuado para proyectos pequeños o cuando se requiere portabilidad de los datos sin depender de un servidor de base de datos.
 
-![img_2.png](img_2.png)
+![img_2a.png](Images/img_2a.png)
 
 
 
 - **MongoDB**: Si elige MongoDB, los datos serán almacenados en una base de datos NoSQL, ideal para manejar grandes volúmenes de información de manera eficiente y escalable. MongoDB permite consultas más complejas y es adecuado para aplicaciones que requieren mayor capacidad y rendimiento en la gestión de datos.
 
 
-![img_3.png](img_3.png)
+![img_3a.png](Images/img_3a.png)
 
 # 6. Pruebas Unitarias 
 
 Las clases `TaskControllerTest`, `TaskServiceTest`, `TaskRepositoryTest` y `TaskConfigTest` no solo verifican el comportamiento esperado de las clases, sino que también permiten medir la calidad del código utilizando JaCoCo. Esta herramienta de cobertura de código ayuda a determinar qué porciones del código han sido ejecutadas durante las pruebas, proporcionando métricas esenciales sobre su calidad y nivel de testeo.
-![img_1.png](img_1.png)
+![img_1a.png](Images/img_1a.png)
 
 En total se realizaronn 59 pruebas unitarias, las cuales se ejecutaron con éxito.
 
@@ -71,4 +71,4 @@ Para verificar la cobertura de las pruebas unitarias se utilizó Jacoco, una her
 
 
 
-![img.png](img.png)
+![imga.png](Images/imga.png)
