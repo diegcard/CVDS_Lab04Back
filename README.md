@@ -18,6 +18,12 @@ El proyecto se estructuró dividiéndolo en épicas, features, casos de uso y ta
 
 ![img.png](Images/img.png)
 
+# 1.1 Diagrama de clases
+
+Se realizó un diagrama de clases para representar la estructura de la aplicación y las relaciones entre las diferentes clases. En el diagrama se pueden observar las clases principales de la aplicación, así como sus atributos y métodos.
+
+![img_4.png](Images/img_4.png)
+
 # 2. MODELO DE ARQUITECTURA CLIENTE-SERVIDOR
 
 Comprender la arquitectura cliente-servidor.
