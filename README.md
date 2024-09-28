@@ -43,12 +43,32 @@ En el paquete **resources**, dentro del archivo **application.properties**, se a
 
 ![img_3.png](Images/img_3.png)
 
+# 5.1. 
+
+El sistema permitirá al usuario elegir el método de almacenamiento de la base de datos entre dos opciones: un archivo plano en formato JSON o una base de datos MongoDB.
+
+- **Archivo plano en JSON**: Los datos se guardarán en un archivo local con formato JSON. Este formato es ligero y fácil de manejar, lo que lo hace adecuado para proyectos pequeños o cuando se requiere portabilidad de los datos sin depender de un servidor de base de datos.
+
+![img_2.png](img_2.png)
+
+
+
+- **MongoDB**: Si elige MongoDB, los datos serán almacenados en una base de datos NoSQL, ideal para manejar grandes volúmenes de información de manera eficiente y escalable. MongoDB permite consultas más complejas y es adecuado para aplicaciones que requieren mayor capacidad y rendimiento en la gestión de datos.
+
+
+![img_3.png](img_3.png)
+
 # 6. Pruebas Unitarias 
 
-Se realizaron pruebas unitarias para verificar el correcto funcionamiento de los métodos implementados en el proyecto. Para ello se utilizó JUnit, un framework de pruebas unitarias para Java que permite la creación de pruebas de forma sencilla y rápida. JUnit se encarga de ejecutar las pruebas y de verificar que los resultados obtenidos sean los esperados.
+Las clases `TaskControllerTest`, `TaskServiceTest`, `TaskRepositoryTest` y `TaskConfigTest` no solo verifican el comportamiento esperado de las clases, sino que también permiten medir la calidad del código utilizando JaCoCo. Esta herramienta de cobertura de código ayuda a determinar qué porciones del código han sido ejecutadas durante las pruebas, proporcionando métricas esenciales sobre su calidad y nivel de testeo.
+![img_1.png](img_1.png)
+
+En total se realizaronn 59 pruebas unitarias, las cuales se ejecutaron con éxito.
 
 # 7. Cobertura  con Jacoco
 
 Para verificar la cobertura de las pruebas unitarias se utilizó Jacoco, una herramienta que permite medir la cobertura de las pruebas realizadas en un proyecto. Jacoco se encarga de analizar el código fuente y de generar un informe detallado con la cobertura de las pruebas realizadas.
 
 
+
+![img.png](img.png)
