@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import edu.eci.cvds.pattens.repository.TaskRepository;
 import edu.eci.cvds.pattens.repository.TaskMongoRepository;
-import edu.eci.cvds.pattens.repository.TaskTextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
