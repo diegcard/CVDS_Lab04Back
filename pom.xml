@@ -33,7 +33,7 @@
         <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>src//configurators/*</sonar.coverage.exclusions>
-        <sonar.token>sqa_5bee0a07dc598e2630bda96040b03300017680eb</sonar.token>
+        <sonar.token>sqa_d77ef3fad1f73f23b935ecd576df88b4553a0090</sonar.token>
     </properties>
     <dependencies>
         <dependency>

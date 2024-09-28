@@ -8,6 +8,7 @@ import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -129,17 +130,11 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void shouldDeleteTask() throws Exception {
+    public void shouldDeleteTaskSuccessfully() throws Exception {
         doNothing().when(taskService).deleteTask("123");
         ResponseEntity<?> response = taskController.deleteTask("123");
-        assertEquals("Task deleted", response.getBody());
-    }
-
-    @Test
-    public void shouldDeleteTaskWhenServiceDeletesTask() throws Exception {
-        doNothing().when(taskService).deleteTask("123");
-        ResponseEntity<?> response = taskController.deleteTask("123");
-        assertEquals("Task deleted", response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Task deleted", ((HashMap) response.getBody()).get("message"));
     }
 
     @Test
@@ -147,7 +142,6 @@ public class TaskControllerTest {
         doThrow(new RuntimeException()).when(taskService).deleteTask("123");
         ResponseEntity<?> response = taskController.deleteTask("123");
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
     }
 
     @Test
