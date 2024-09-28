@@ -129,5 +129,19 @@ public class TaskServiceTest {
         assertThrows(RuntimeException.class, () -> taskService.undoneTask("125"));
     }
 
+    @Test
+    public void shouldChangeTaskToNotCompletedWhenCompleted() {
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true);
+        when(taskRepository.existsById("123")).thenReturn(true);
+        when(taskRepository.findTaskById("123")).thenReturn(task);
+        when(taskRepository.updateTask(task)).thenReturn(task);
+        Task changedTask = taskService.changeIsCompleted("123");
+        assertFalse(changedTask.getIsCompleted());
+    }
 
+    @Test
+    public void shouldThrowExceptionWhenChangeIsCompletedWithNonExistingId() {
+        when(taskRepository.existsById("125")).thenReturn(false);
+        assertThrows(RuntimeException.class, () -> taskService.changeIsCompleted("125"));
+    }
 }
