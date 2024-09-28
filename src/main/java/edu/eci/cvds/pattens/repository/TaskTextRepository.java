@@ -20,11 +20,22 @@ import java.util.UUID;
 @Repository
 public class TaskTextRepository implements TaskRepository{
 
-    private static final String FILE_PATH = "src/main/resources/task.json";
+    private static String FILE_PATH = "src/main/resources/task.json";
     private final ObjectMapper objectMapper;
 
+    /**
+     * Constructor of the class
+     */
     public TaskTextRepository() {
         this.objectMapper = new ObjectMapper();
+    }
+
+    /**
+     * Constructor of the class
+     */
+    public TaskTextRepository(String filePath) {
+        this.objectMapper = new ObjectMapper();
+        this.FILE_PATH = filePath;
     }
 
     /**
@@ -131,7 +142,7 @@ public class TaskTextRepository implements TaskRepository{
      * Write the tasks to the file
      * @param tasks the tasks to write
      */
-    private void writeTasksToFile(List<Task> tasks) {
+    public void writeTasksToFile(List<Task> tasks) {
         try {
             objectMapper.writeValue(new File(FILE_PATH), tasks);
         } catch (IOException e) {

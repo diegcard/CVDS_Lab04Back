@@ -39,7 +39,7 @@ public class TaskService {
      * @return a list of all tasks
      */
     public List<Task> getAllTasks() {
-        
+
         return taskRepository.findAllTasks();
 
     }
@@ -59,8 +59,6 @@ public class TaskService {
                 throw new DataIntegrityViolationException("Task already exists");
             }
             return taskRepository.saveTask(task);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Task already exists");
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Error creating task");
         } catch (Exception e) {
@@ -83,8 +81,6 @@ public class TaskService {
             } else {
                 throw new Exception("Task not found");
             }
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("Data integrity violation", e);
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Transaction system error", e);
         } catch (Exception e) {

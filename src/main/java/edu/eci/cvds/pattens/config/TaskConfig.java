@@ -18,7 +18,7 @@ public class TaskConfig {
     private String repositoryType;
 
     private final TaskMongoRepository taskMongoRepository;
-    private final TaskTextRepository taskTextRepository;
+    private final TaskRepository taskTextRepository;
 
     /**
      * Constructor of the class. It receives the taskMongoRepository and taskTextRepository as parameters.
@@ -26,7 +26,7 @@ public class TaskConfig {
      * @param taskTextRepository
      */
     @Autowired
-    public TaskConfig(TaskMongoRepository taskMongoRepository, TaskTextRepository taskTextRepository) {
+    public TaskConfig(TaskMongoRepository taskMongoRepository, TaskRepository taskTextRepository) {
         this.taskMongoRepository = taskMongoRepository;
         this.taskTextRepository = taskTextRepository;
     }
@@ -42,7 +42,7 @@ public class TaskConfig {
         } else if ("text".equalsIgnoreCase(repositoryType)) {
             return taskTextRepository;
         } else {
-            throw new IllegalArgumentException("Tipo de repositorio no soportado");
+            throw new IllegalArgumentException("Unsupported repository type");
         }
     }
 
