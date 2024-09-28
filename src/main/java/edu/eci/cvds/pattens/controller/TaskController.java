@@ -138,4 +138,21 @@ public class TaskController {
         }
     }
 
+    /**
+     * this method is in charge of chanhe the isCompleted
+     * of a task in the application calling the service
+     * @param id the ID of the task
+     * @return the updated task
+     */
+    @PutMapping("/changeIsCompleted/{id}")
+    public ResponseEntity<?> changeIsCompleted(@PathVariable String id) {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.changeIsCompleted(id));
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
 }

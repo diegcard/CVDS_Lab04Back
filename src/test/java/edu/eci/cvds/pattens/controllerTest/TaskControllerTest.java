@@ -189,4 +189,19 @@ public class TaskControllerTest {
         ResponseEntity<?> response = taskController.undoneTask("123");
         assertEquals(task, response.getBody());
     }
+
+    @Test
+    public void shouldChangeIsCompletedSuccessfully() throws Exception {
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false);
+        when(taskService.changeIsCompleted("123")).thenReturn(task);
+        ResponseEntity<?> response = taskController.changeIsCompleted("123");
+        assertEquals(task, response.getBody());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenServiceThrowsExceptionOnChangeIsCompleted() {
+        when(taskService.changeIsCompleted("123")).thenThrow(new RuntimeException());
+        ResponseEntity<?> response = taskController.changeIsCompleted("123");
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
 }

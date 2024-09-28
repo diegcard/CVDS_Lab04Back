@@ -125,4 +125,17 @@ public class TaskService {
         task.setIsCompleted(false);
         return taskRepository.updateTask(task);
     }
+
+    /**
+     * Change the isCompleted of a task.
+     * if the task is completed, change to not completed
+     * if the task is not completed, change to completed
+     * @param id the ID of the task to change
+     * @return the task changed
+     */
+    public Task changeIsCompleted(String id) {
+        Task task = getTaskById(id);
+        task.setIsCompleted(!task.getIsCompleted());
+        return taskRepository.updateTask(task);
+    }
 }

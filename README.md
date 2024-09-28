@@ -77,4 +77,4 @@ Para verificar la cobertura de las pruebas unitarias se utilizó Jacoco, una her
 
 
 
-![imga.png](Images/imga.png)
+![img30.png](Images/img30.png)
