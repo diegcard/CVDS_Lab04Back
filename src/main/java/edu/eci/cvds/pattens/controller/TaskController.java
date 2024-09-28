@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 /**
  * this class is the controller for the tasks of the application
  */
@@ -24,10 +26,12 @@ public class TaskController {
      */
     @GetMapping("/all")
     public ResponseEntity<?> getAllTasks() {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -38,10 +42,12 @@ public class TaskController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getTaskById(@PathVariable String id) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.getTaskById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -53,10 +59,12 @@ public class TaskController {
      */
     @PostMapping("/create")
     public ResponseEntity<?> createTask(@RequestBody Task task) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.createTask(task));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -68,10 +76,12 @@ public class TaskController {
      */
     @PutMapping("/update")
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(task));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -83,11 +93,14 @@ public class TaskController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable String id) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             taskService.deleteTask(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Task deleted");
+            response.put("message", "Task deleted");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -99,10 +112,12 @@ public class TaskController {
      */
     @PutMapping("/done/{id}")
     public ResponseEntity<?> doneTask(@PathVariable String id) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.doneTask(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -114,10 +129,12 @@ public class TaskController {
      */
     @PutMapping("/undone/{id}")
     public ResponseEntity<?> undoneTask(@PathVariable String id) {
+        HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.undoneTask(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
