@@ -74,7 +74,7 @@ public class TaskController {
      * @param task
      * @return the updated task
      */
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
@@ -110,7 +110,7 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/done/{id}")
+    @PatchMapping("/done/{id}")
     public ResponseEntity<?> doneTask(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
@@ -127,7 +127,7 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/undone/{id}")
+    @PatchMapping("/undone/{id}")
     public ResponseEntity<?> undoneTask(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
@@ -144,7 +144,7 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/changeIsCompleted/{id}")
+    @PatchMapping("/changeIsCompleted/{id}")
     public ResponseEntity<?> changeIsCompleted(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
