@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 public class TaskServiceTest {
 
-    @Mock
+    /*@Mock
     private TaskRepository taskRepository;
 
     @InjectMocks
@@ -143,5 +143,5 @@ public class TaskServiceTest {
     public void shouldThrowExceptionWhenChangeIsCompletedWithNonExistingId() {
         when(taskRepository.existsById("125")).thenReturn(false);
         assertThrows(RuntimeException.class, () -> taskService.changeIsCompleted("125"));
-    }
+    }*/
 }

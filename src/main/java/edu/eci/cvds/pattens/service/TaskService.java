@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +58,12 @@ public class TaskService {
             //if the id lready exists, throw an exception
             if (taskRepository.existsById(String.valueOf(task.getId()))) {
                 throw new DataIntegrityViolationException("Task already exists");
+            } else if (!(task.getDifficultyLevel().equalsIgnoreCase("low") || task.getDifficultyLevel().equalsIgnoreCase("medium" )|| task.getDifficultyLevel().equalsIgnoreCase("high"))) {
+                throw new DataIntegrityViolationException("Invalid difficulty level");
+            } else if (task.getPriority() < 1 || task.getPriority() > 5) {
+                throw new DataIntegrityViolationException("Invalid priority");
+            } else if (task.getEstimatedTime().before(new Date())) {
+                throw new RuntimeException("Invalid estimated time");
             }
             return taskRepository.saveTask(task);
         } catch (TransactionSystemException e) {
@@ -95,6 +102,9 @@ public class TaskService {
      */
     public void deleteTask(String id) {
         Task task = getTaskById(id);
+        if(task == null){
+            throw new RuntimeException("Task not found");
+        }
         taskRepository.deleteTask(task);
     }
 
@@ -105,6 +115,9 @@ public class TaskService {
      */
     public Task doneTask(String id) {
         Task task = getTaskById(id);
+        if(task == null){
+            throw new RuntimeException("Task not found");
+        }
         if(task.getIsCompleted()){
             return task;
         }
@@ -119,6 +132,9 @@ public class TaskService {
      */
     public Task undoneTask(String id) {
         Task task = getTaskById(id);
+        if(task == null){
+            throw new RuntimeException("Task not found");
+        }
         if (!task.getIsCompleted()) {
             return task;
         }
@@ -135,6 +151,9 @@ public class TaskService {
      */
     public Task changeIsCompleted(String id) {
         Task task = getTaskById(id);
+        if(task == null){
+            throw new RuntimeException("Task not found");
+        }
         task.setIsCompleted(!task.getIsCompleted());
         return taskRepository.updateTask(task);
     }

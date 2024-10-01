@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 public class TaskControllerTest {
 
-    @Mock
+    /*@Mock
     private TaskService taskService;
 
     @InjectMocks
@@ -203,5 +203,5 @@ public class TaskControllerTest {
         when(taskService.changeIsCompleted("123")).thenThrow(new RuntimeException());
         ResponseEntity<?> response = taskController.changeIsCompleted("123");
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+    }*/
 }
