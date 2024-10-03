@@ -55,15 +55,17 @@ public class TaskService {
     @Transactional
     public Task createTask(Task task) throws Exception {
         try {
-            //if the id lready exists, throw an exception
+            //if the id already exists, throw an exception
             if (taskRepository.existsById(String.valueOf(task.getId()))) {
                 throw new DataIntegrityViolationException("Task already exists");
             } else if (!(task.getDifficultyLevel().equalsIgnoreCase("low") || task.getDifficultyLevel().equalsIgnoreCase("medium" )|| task.getDifficultyLevel().equalsIgnoreCase("high"))) {
                 throw new DataIntegrityViolationException("Invalid difficulty level");
             } else if (task.getPriority() < 1 || task.getPriority() > 5) {
                 throw new DataIntegrityViolationException("Invalid priority");
-            } else if (task.getEstimatedTime().before(new Date())) {
-                throw new RuntimeException("Invalid estimated time");
+            } else if (task.getEstimatedTime().before(new Date()) || task.getCreationDate().equals(new Date())) {
+                throw new RuntimeException("Invalid time");
+            } else if(task.getEstimatedTime().before(task.getCreationDate())){
+                throw new RuntimeException("Invalid time");
             }
             return taskRepository.saveTask(task);
         } catch (TransactionSystemException e) {

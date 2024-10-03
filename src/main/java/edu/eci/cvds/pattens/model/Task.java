@@ -23,5 +23,7 @@ public class Task {
     private Boolean isCompleted;
     private String difficultyLevel; //high, medium, low
     private int priority; //1, 2, 3, 4, 5
+    private Date creationDate; //dd-mm-yyyy
     private Date estimatedTime; //dd-mm-yyyy
+    private Date finishDate; //dd-mm-yyyy
 }

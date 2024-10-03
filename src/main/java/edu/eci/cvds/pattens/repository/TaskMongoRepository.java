@@ -14,6 +14,24 @@ import java.util.List;
 public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task,String>{
 
     /**
+     * Generates a unique 5-character alphanumeric ID.
+     * The ID is composed of uppercase letters, lowercase letters, and digits.
+     * Ensures that the generated ID is unique by checking against a set of previously generated IDs.
+     *
+     * @returns string A unique 5-character alphanumeric ID.
+     */
+    private String generateId() {
+        String id = "";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        do {
+            for (int i = 0; i < 5; i++) {
+                id += characters.charAt((int) Math.floor(Math.random() * characters.length()));
+            }
+        } while (existsById(id));
+        return id;
+    }
+
+    /**
      * Save and create a new task
      * @param task the task to create
      * @return the created task
@@ -21,8 +39,9 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
     @Override
     public default Task saveTask(Task task){
         task.setIsCompleted(false);
+        task.setFinishDate(null);
         if(task.getId() == null){
-            task.setId(java.util.UUID.randomUUID().toString());
+            task.setId(generateId());
         }
         save(task);
         return task;
