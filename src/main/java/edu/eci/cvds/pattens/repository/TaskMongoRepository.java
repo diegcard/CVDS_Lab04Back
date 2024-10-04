@@ -15,7 +15,7 @@ import java.util.List;
 public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task,String>{
 
     /**
-     * Generates a unique 5-character alphanumeric ID.
+     * Generates a unique 8-character alphanumeric ID.
      * The ID is composed of uppercase letters, lowercase letters, and digits.
      * Ensures that the generated ID is unique by checking against a set of previously generated IDs.
      *
@@ -25,7 +25,7 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
         String id = "";
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         do {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 8; i++) {
                 id += characters.charAt((int) Math.floor(Math.random() * characters.length()));
             }
         } while (existsById(id));

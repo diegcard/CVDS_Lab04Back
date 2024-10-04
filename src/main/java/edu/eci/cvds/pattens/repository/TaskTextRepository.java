@@ -1,5 +1,7 @@
 package edu.eci.cvds.pattens.repository;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import edu.eci.cvds.pattens.model.Task;
 import org.apache.tomcat.util.json.JSONParser;
 
@@ -28,7 +30,9 @@ public class TaskTextRepository implements TaskRepository{
      * Constructor of the class
      */
     public TaskTextRepository() {
+
         this.objectMapper = new ObjectMapper();
+        configureObjectMapper();
     }
 
     /**
@@ -36,7 +40,13 @@ public class TaskTextRepository implements TaskRepository{
      */
     public TaskTextRepository(String filePath) {
         this.objectMapper = new ObjectMapper();
+        configureObjectMapper();
         this.FILE_PATH = filePath;
+    }
+
+    private void configureObjectMapper() {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     /**
@@ -44,13 +54,13 @@ public class TaskTextRepository implements TaskRepository{
      * The ID is composed of uppercase letters, lowercase letters, and digits.
      * Ensures that the generated ID is unique by checking against a set of previously generated IDs.
      *
-     * @returns string A unique 5-character alphanumeric ID.
+     * @returns string A unique 8-character alphanumeric ID.
      */
     private String generateId() {
         String id = "";
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         do {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 8; i++) {
                 id += characters.charAt((int) Math.floor(Math.random() * characters.length()));
             }
         } while (existsById(id));
@@ -85,7 +95,6 @@ public class TaskTextRepository implements TaskRepository{
      */
     @Override
     public Task findTaskById(String id) {
-        //If task is not found, throw an exception
         if(!existsById(id)){
             throw new RuntimeException("Task not found");
         }
@@ -142,6 +151,11 @@ public class TaskTextRepository implements TaskRepository{
                 t.setNameTask(task.getNameTask());
                 t.setIsCompleted(task.getIsCompleted());
                 t.setDescriptionTask(task.getDescriptionTask());
+                t.setDifficultyLevel(task.getDifficultyLevel());
+                t.setEstimatedTime(task.getEstimatedTime());
+                t.setPriority(task.getPriority());
+                t.setFinishDate(task.getFinishDate());
+                t.setCreationDate(task.getCreationDate());
                 break;
             }
         }

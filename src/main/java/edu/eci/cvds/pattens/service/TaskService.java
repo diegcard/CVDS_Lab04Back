@@ -9,6 +9,7 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Service class for managing tasks.
@@ -161,5 +162,67 @@ public class TaskService {
         }
         task.setIsCompleted(!task.getIsCompleted());
         return taskRepository.updateTask(task);
+    }
+
+    /**
+     * Generate a radom number of tasks between 100 and 1000
+     *
+     *
+     * @return the number of tasks created
+     */
+    public int generateRandomTasks() {
+        Random random = new Random();
+        int numberTasks = random.nextInt(901) + 100;
+        for (int i = 0; i < numberTasks; i++) {
+            Task task = createRandomTask();
+            try {
+                taskRepository.saveTask(task);
+            } catch (Exception e) {
+                i--;
+            }
+        }
+        return numberTasks;
+    }
+
+    /**
+     * Create a random task
+     *
+     * @return the task created
+     */
+    private Task createRandomTask() {
+        Random random = new Random();
+
+        String[] levels = {"low", "medium", "high"};
+
+        Task task = new Task();
+
+        task.setNameTask("Random Task" + random.nextInt(1000));
+        task.setDescriptionTask("This is a randomly generated task");
+        task.setDifficultyLevel(levels[random.nextInt(3)]);
+        task.setPriority(random.nextInt(5) + 1);
+        task.setEstimatedTime(LocalDate.now().plusDays(random.nextInt(90) + 1));
+        return task;
+    }
+
+    /**
+     * This method is in charge to delete all existing tasks
+     *
+     * @return the number of tasks deleted
+     */
+    public int deleteAllTasks() {
+        List<Task> tasks = getAllTasks();
+        for (Task task : tasks) {
+            deleteTask(task.getId());
+        }
+        return tasks.size();
+    }
+
+    /**
+     * Method that return how many tasks are in the application
+     *
+     * @return the number of tasks
+     */
+    public int countTasks() {
+        return getAllTasks().size();
     }
 }
