@@ -7,8 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -53,25 +52,23 @@ public class TaskService {
      * @throws Exception if an error occurs during creation
      */
     @Transactional
-    public Task createTask(Task task) throws Exception {
+    public Task createTask(Task task) throws Exception, DataIntegrityViolationException, RuntimeException {
         try {
-            //if the id already exists, throw an exception
-            if (taskRepository.existsById(String.valueOf(task.getId()))) {
+            if (taskRepository.existsById(task.getId())) {
                 throw new DataIntegrityViolationException("Task already exists");
-            } else if (!(task.getDifficultyLevel().equalsIgnoreCase("low") || task.getDifficultyLevel().equalsIgnoreCase("medium" )|| task.getDifficultyLevel().equalsIgnoreCase("high"))) {
+            }
+            if (!(task.getDifficultyLevel().equalsIgnoreCase("low") || task.getDifficultyLevel().equalsIgnoreCase("medium" )|| task.getDifficultyLevel().equalsIgnoreCase("high"))) {
                 throw new DataIntegrityViolationException("Invalid difficulty level");
-            } else if (task.getPriority() < 1 || task.getPriority() > 5) {
+            }
+            if (task.getPriority() < 1 || task.getPriority() > 5) {
                 throw new DataIntegrityViolationException("Invalid priority");
-            } else if (task.getEstimatedTime().before(new Date()) || task.getCreationDate().equals(new Date())) {
-                throw new RuntimeException("Invalid time");
-            } else if(task.getEstimatedTime().before(task.getCreationDate())){
+            }
+            if(task.getEstimatedTime().isBefore(LocalDate.now())){
                 throw new RuntimeException("Invalid time");
             }
             return taskRepository.saveTask(task);
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Error creating task");
-        } catch (Exception e) {
-            throw new Exception("Error creating task");
         }
     }
 
@@ -85,15 +82,21 @@ public class TaskService {
     @Transactional
     public Task updateTask(Task task) throws Exception {
         try {
-            if (taskRepository.existsById(String.valueOf(task.getId()))) {
-                return taskRepository.updateTask(task);
-            } else {
-                throw new Exception("Task not found");
+            if (!taskRepository.existsById(task.getId())) {
+                throw new DataIntegrityViolationException("Task not found");
             }
+            if (!(task.getDifficultyLevel().equalsIgnoreCase("low") || task.getDifficultyLevel().equalsIgnoreCase("medium" )|| task.getDifficultyLevel().equalsIgnoreCase("high"))) {
+                throw new DataIntegrityViolationException("Invalid difficulty level");
+            }
+            if (task.getPriority() < 1 || task.getPriority() > 5) {
+                throw new DataIntegrityViolationException("Invalid priority");
+            }
+            if(task.getEstimatedTime().isBefore(LocalDate.now())){
+                throw new RuntimeException("Invalid time");
+            }
+            return taskRepository.updateTask(task);
         } catch (TransactionSystemException e) {
-            throw new TransactionSystemException("Transaction system error", e);
-        } catch (Exception e) {
-            throw new Exception("An unexpected error occurred", e);
+            throw new TransactionSystemException("Error creating task");
         }
     }
 
