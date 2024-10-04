@@ -4,6 +4,7 @@ import edu.eci.cvds.pattens.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public interface TaskMongoRepository extends TaskRepository,MongoRepository<Task
     public default Task saveTask(Task task){
         task.setIsCompleted(false);
         task.setFinishDate(null);
+        task.setCreationDate(LocalDate.now());
         if(task.getId() == null){
             task.setId(generateId());
         }

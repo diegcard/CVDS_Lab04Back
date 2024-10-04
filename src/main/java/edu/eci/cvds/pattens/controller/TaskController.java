@@ -61,7 +61,7 @@ public class TaskController {
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.createTask(task));
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -78,7 +78,7 @@ public class TaskController {
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(task));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskService.updateTask(task));
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -97,7 +97,7 @@ public class TaskController {
         try {
             taskService.deleteTask(id);
             response.put("message", "Task deleted");
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

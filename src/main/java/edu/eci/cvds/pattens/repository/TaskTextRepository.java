@@ -10,9 +10,10 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 /**
  * This class is in charge of managing the tasks repository, when the repository is a text file
@@ -66,6 +67,7 @@ public class TaskTextRepository implements TaskRepository{
     public Task saveTask(Task task) {
         List<Task> tasks = findAllTasks();
         task.setIsCompleted(false);
+        task.setCreationDate(LocalDate.now());
         task.setFinishDate(null);
         if (task.getId() == null) {
             task.setId(generateId());

@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * This class is in charge of representing the task entity.
@@ -23,7 +23,7 @@ public class Task {
     private Boolean isCompleted;
     private String difficultyLevel; //high, medium, low
     private int priority; //1, 2, 3, 4, 5
-    private Date creationDate; //dd-mm-yyyy
-    private Date estimatedTime; //dd-mm-yyyy
-    private Date finishDate; //dd-mm-yyyy
+    private LocalDate creationDate; //dd-mm-yyyy
+    private LocalDate estimatedTime; //dd-mm-yyyy
+    private LocalDate finishDate; //dd-mm-yyyy
 }
