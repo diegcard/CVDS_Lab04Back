@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 public class TaskMongoRepositoryTest {
 
-    /*@Mock
+    @Mock
     private MongoRepository<Task, String> mongoRepository;
 
     private TaskMongoRepository taskMongoRepository;
@@ -262,7 +262,7 @@ public class TaskMongoRepositoryTest {
 
         assertNull(foundTask);
         verify(mongoRepository).findById("123");
-    }*/
+    }
 
 
 
