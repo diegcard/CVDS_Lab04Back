@@ -155,4 +155,50 @@ public class TaskController {
         }
     }
 
+    /**
+     * This method is in charge of generating a random number of tasks between 100 and 1000
+     * @return the number of tasks created
+     */
+    @PostMapping("/generateRandomTasks")
+    public ResponseEntity<?> generateRandomTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.generateRandomTasks());
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    /**
+     * this method is in charge to delete all the tasks in the application
+     * @return the number of tasks deleted
+     */
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<?> deleteAllTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskService.deleteAllTasks());
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    /**
+     * Method that return how many tasks are in the application
+     *
+     * @return the number of tasks
+     */
+    @GetMapping("/count")
+    public ResponseEntity<?> countTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.countTasks());
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
 }
