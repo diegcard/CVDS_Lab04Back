@@ -14,8 +14,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskConfigTest {
-
-    /*@Mock
+    @Mock
     private TaskMongoRepository taskMongoRepository;
 
     @Mock
@@ -75,5 +74,5 @@ public class TaskConfigTest {
         });
 
         assertEquals("Unsupported repository type", exception.getMessage());
-    }*/
+    }
 }

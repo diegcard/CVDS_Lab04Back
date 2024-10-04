@@ -161,6 +161,11 @@ public class TaskService {
             throw new RuntimeException("Task not found");
         }
         task.setIsCompleted(!task.getIsCompleted());
+        if (task.getFinishDate() == null) {
+            task.setFinishDate(LocalDate.now());
+        } else {
+            task.setFinishDate(null);
+        }
         return taskRepository.updateTask(task);
     }
 

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +18,7 @@ import edu.eci.cvds.pattens.repository.TaskTextRepository;
 
 class TaskTextRepositoryTest {
 
-    /*private TaskTextRepository repository;
+    private TaskTextRepository repository;
     private ObjectMapper objectMapper;
 
     @TempDir
@@ -51,7 +52,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testFindTaskById() {
-        Task task = new Task("30","Task 1", "Description 1",false);
+        Task task = new Task("30","Task 1", "Description 1",false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
         Task savedTask = repository.saveTask(task);
         Task foundTask = repository.findTaskById(task.getId());
 
@@ -62,8 +63,8 @@ class TaskTextRepositoryTest {
 
     @Test
     void testFindAllTasks() {
-        repository.saveTask(new Task("1","Task 1", "Description 1",false));
-        repository.saveTask(new Task("2","Task 1", "Description 1",false));
+        repository.saveTask(new Task("1","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        repository.saveTask(new Task("2","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
 
         List<Task> tasks = repository.findAllTasks();
 
@@ -72,7 +73,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testDeleteTask() {
-        Task task = repository.saveTask(new Task("3","Task 1", "Description 1",false));
+        Task task = repository.saveTask(new Task("3","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
 
         repository.deleteTask(task);
 
@@ -81,7 +82,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testUpdateTask() {
-        Task task = repository.saveTask(new Task("4","Task 1", "Description 1",false));
+        Task task = repository.saveTask(new Task("4","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
 
         task.setNameTask("Updated");
         task.setDescriptionTask("Updated description");
@@ -96,9 +97,10 @@ class TaskTextRepositoryTest {
 
     @Test
     void testExistsById() {
-        Task task = repository.saveTask(new Task("5","Task 1", "Description 1",false));
+        Task task = repository.saveTask(new Task("5","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
 
         assertTrue(repository.existsById(task.getId()));
         assertFalse(repository.existsById("non-existent-id"));
-    }*/
+    }
+
 }
