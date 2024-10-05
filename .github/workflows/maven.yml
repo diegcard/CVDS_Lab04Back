@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven (compile phase)
-        run: mvn compile
+        run: mvn package
 
   test:
     runs-on: ubuntu-latest
