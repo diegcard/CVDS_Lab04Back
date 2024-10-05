@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven (compile phase)
-        run: mvn compile
+        run: mvn package
 
   test:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
           cache: maven
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v4
+        uses: azure/webapps-deploy@v3
         with:
           app-name: CVDSTODO
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
