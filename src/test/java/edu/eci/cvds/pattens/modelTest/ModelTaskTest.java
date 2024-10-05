@@ -4,6 +4,8 @@ import edu.eci.cvds.pattens.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelTaskTest {
@@ -43,5 +45,37 @@ public class ModelTaskTest {
 
         task.setIsCompleted(false);
         assertFalse(task.getIsCompleted());
+    }
+
+    @Test
+    public void shouldSetAndGetDifficultyLevel() {
+        String difficultyLevel = "high";
+        task.setDifficultyLevel(difficultyLevel);
+        assertEquals(difficultyLevel, task.getDifficultyLevel());
+    }
+
+    @Test
+    public void shouldSetAndGetPriority() {
+        int priority = 1;
+        task.setPriority(priority);
+        assertEquals(priority, task.getPriority());
+    }
+
+    @Test
+    public void shouldSetAndGetCreationDate() {
+        task.setCreationDate(LocalDate.now());
+        assertEquals(LocalDate.now(), task.getCreationDate());
+    }
+
+    @Test
+    public void shouldSetAndGetEstimatedTime() {
+        task.setEstimatedTime(LocalDate.now());
+        assertEquals(LocalDate.now(), task.getEstimatedTime());
+    }
+
+    @Test
+    public void shouldSetAndGetFinishDate() {
+        task.setFinishDate(LocalDate.now());
+        assertEquals(LocalDate.now(), task.getFinishDate());
     }
 }

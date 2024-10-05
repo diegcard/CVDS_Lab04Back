@@ -61,7 +61,7 @@ public class TaskController {
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.createTask(task));
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -74,11 +74,11 @@ public class TaskController {
      * @param task
      * @return the updated task
      */
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(task));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskService.updateTask(task));
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -97,7 +97,7 @@ public class TaskController {
         try {
             taskService.deleteTask(id);
             response.put("message", "Task deleted");
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -110,7 +110,7 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/done/{id}")
+    @PatchMapping("/done/{id}")
     public ResponseEntity<?> doneTask(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
@@ -127,7 +127,7 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/undone/{id}")
+    @PatchMapping("/undone/{id}")
     public ResponseEntity<?> undoneTask(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
@@ -144,11 +144,57 @@ public class TaskController {
      * @param id the ID of the task
      * @return the updated task
      */
-    @PutMapping("/changeIsCompleted/{id}")
+    @PatchMapping("/changeIsCompleted/{id}")
     public ResponseEntity<?> changeIsCompleted(@PathVariable String id) {
         HashMap<String, Object> response = new HashMap<>();
         try {
             return ResponseEntity.status(HttpStatus.OK).body(taskService.changeIsCompleted(id));
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    /**
+     * This method is in charge of generating a random number of tasks between 100 and 1000
+     * @return the number of tasks created
+     */
+    @PostMapping("/generateRandomTasks")
+    public ResponseEntity<?> generateRandomTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.generateRandomTasks());
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    /**
+     * this method is in charge to delete all the tasks in the application
+     * @return the number of tasks deleted
+     */
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<?> deleteAllTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskService.deleteAllTasks());
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    /**
+     * Method that return how many tasks are in the application
+     *
+     * @return the number of tasks
+     */
+    @GetMapping("/count")
+    public ResponseEntity<?> countTasks() {
+        HashMap<String, Object> response = new HashMap<>();
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.countTasks());
         } catch (Exception e) {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

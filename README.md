@@ -79,3 +79,18 @@ Para verificar la cobertura de las pruebas unitarias se utilizó Jacoco, una her
 
 
 ![img30.png](Images/img30.png)
+
+# Laboratorio 5 - CVDS
+
+# Parte 1. DEVOPS / CI-CD
+
+![img.png](Images/img_5.png)
+
+Se crean los pipelines de CI/CD en Azure DevOps, los cuales se encargan de automatizar el proceso de integración y despliegue continuo del proyecto. El pipeline de CI se encarga de compilar el código, ejecutar las pruebas unitarias y generar un informe de cobertura con JaCoCo. Por su parte, el pipeline de CD se encarga de desplegar la aplicación en Heroku una vez que se ha realizado la integración y las pruebas correspondientes.
+
+Y despues e hcae un release a la clase main
+
+![img_1.png](Images/img_6.png)
+
+Verificamos que los testeos parason con exito
+

@@ -1,5 +1,7 @@
 package edu.eci.cvds.pattens.repository;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import edu.eci.cvds.pattens.model.Task;
 import org.apache.tomcat.util.json.JSONParser;
 
@@ -10,9 +12,10 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 /**
  * This class is in charge of managing the tasks repository, when the repository is a text file
@@ -27,7 +30,9 @@ public class TaskTextRepository implements TaskRepository{
      * Constructor of the class
      */
     public TaskTextRepository() {
+
         this.objectMapper = new ObjectMapper();
+        configureObjectMapper();
     }
 
     /**
@@ -35,7 +40,31 @@ public class TaskTextRepository implements TaskRepository{
      */
     public TaskTextRepository(String filePath) {
         this.objectMapper = new ObjectMapper();
+        configureObjectMapper();
         this.FILE_PATH = filePath;
+    }
+
+    private void configureObjectMapper() {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
+
+    /**
+     * Generates a unique 5-character alphanumeric ID.
+     * The ID is composed of uppercase letters, lowercase letters, and digits.
+     * Ensures that the generated ID is unique by checking against a set of previously generated IDs.
+     *
+     * @returns string A unique 8-character alphanumeric ID.
+     */
+    private String generateId() {
+        String id = "";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        do {
+            for (int i = 0; i < 8; i++) {
+                id += characters.charAt((int) Math.floor(Math.random() * characters.length()));
+            }
+        } while (existsById(id));
+        return id;
     }
 
     /**
@@ -48,8 +77,10 @@ public class TaskTextRepository implements TaskRepository{
     public Task saveTask(Task task) {
         List<Task> tasks = findAllTasks();
         task.setIsCompleted(false);
+        task.setCreationDate(LocalDate.now());
+        task.setFinishDate(null);
         if (task.getId() == null) {
-            task.setId(UUID.randomUUID().toString());
+            task.setId(generateId());
         }
         tasks.add(task);
         writeTasksToFile(tasks);
@@ -64,7 +95,6 @@ public class TaskTextRepository implements TaskRepository{
      */
     @Override
     public Task findTaskById(String id) {
-        //If task is not found, throw an exception
         if(!existsById(id)){
             throw new RuntimeException("Task not found");
         }
@@ -121,6 +151,11 @@ public class TaskTextRepository implements TaskRepository{
                 t.setNameTask(task.getNameTask());
                 t.setIsCompleted(task.getIsCompleted());
                 t.setDescriptionTask(task.getDescriptionTask());
+                t.setDifficultyLevel(task.getDifficultyLevel());
+                t.setEstimatedTime(task.getEstimatedTime());
+                t.setPriority(task.getPriority());
+                t.setFinishDate(task.getFinishDate());
+                t.setCreationDate(task.getCreationDate());
                 break;
             }
         }
