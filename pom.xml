@@ -35,6 +35,7 @@
         <sonar.coverage.exclusions>src//configurators/*</sonar.coverage.exclusions>
         <sonar.token>sqa_d77ef3fad1f73f23b935ecd576df88b4553a0090</sonar.token>
     </properties>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
