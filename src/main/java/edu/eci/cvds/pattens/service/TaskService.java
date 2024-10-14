@@ -1,7 +1,7 @@
 package edu.eci.cvds.pattens.service;
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskRepository;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

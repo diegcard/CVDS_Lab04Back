@@ -1,4 +1,4 @@
-package edu.eci.cvds.pattens.repository;
+package edu.eci.cvds.pattens.repository.task;
 
 import edu.eci.cvds.pattens.model.Task;
 import org.springframework.stereotype.Component;

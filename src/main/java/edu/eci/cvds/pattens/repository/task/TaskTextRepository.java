@@ -1,11 +1,9 @@
-package edu.eci.cvds.pattens.repository;
+package edu.eci.cvds.pattens.repository.task;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import edu.eci.cvds.pattens.model.Task;
-import org.apache.tomcat.util.json.JSONParser;
 
-import edu.eci.cvds.pattens.model.Task;
 import org.springframework.stereotype.Repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
