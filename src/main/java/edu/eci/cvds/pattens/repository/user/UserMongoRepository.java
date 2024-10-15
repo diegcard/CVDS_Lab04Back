@@ -2,14 +2,18 @@ package edu.eci.cvds.pattens.repository.user;
 
 import edu.eci.cvds.pattens.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
+@Repository
 public interface UserMongoRepository extends UserRepository, MongoRepository<User, String> {
 
     default boolean existsById(String id){
         User user = findUserById(id);
         return user != null;
     }
-
 
     /**
      * Generates a unique 8-character alphanumeric ID.
@@ -39,8 +43,21 @@ public interface UserMongoRepository extends UserRepository, MongoRepository<Use
         if(user.getId() == null){
             user.setId(generateId());
         }
+        user.setCreationDate(LocalDate.now());
         save(user);
         return user;
     }
+
+    @Override
+    default User findUserById(String id){
+        return findById(id).orElse(null);
+    }
+
+    @Override
+    default List<User> findAllUsers(){
+        return findAll();
+    }
+
+    User findByUsername(String username);
 
 }

@@ -10,8 +10,7 @@ public interface UserRepository {
     User saveUser(User user);
     User findUserById(String id);
     List<User> findAllUsers();
-    void deleteUser(User user);
-    User updateUser(User user);
     boolean existsById(String id);
+    boolean existsByUsername(String username);
 
 }
