@@ -1,7 +1,7 @@
 package edu.eci.cvds.pattens.serviceTest;
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskRepository;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
 import edu.eci.cvds.pattens.service.TaskService;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

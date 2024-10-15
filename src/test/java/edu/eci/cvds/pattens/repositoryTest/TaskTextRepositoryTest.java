@@ -14,7 +14,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskTextRepository;
+import edu.eci.cvds.pattens.repository.task.TaskTextRepository;
 
 class TaskTextRepositoryTest {
 

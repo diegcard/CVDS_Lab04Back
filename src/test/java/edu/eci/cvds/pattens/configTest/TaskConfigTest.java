@@ -1,9 +1,9 @@
 package edu.eci.cvds.pattens.configTest;
 
 import edu.eci.cvds.pattens.config.TaskConfig;
-import edu.eci.cvds.pattens.repository.TaskMongoRepository;
-import edu.eci.cvds.pattens.repository.TaskRepository;
-import edu.eci.cvds.pattens.repository.TaskTextRepository;
+import edu.eci.cvds.pattens.repository.task.TaskMongoRepository;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
+import edu.eci.cvds.pattens.repository.task.TaskTextRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
