@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.eci.cvds.pattens.configTest.TaskConfigTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.992 s -- in edu.eci.cvds.pattens.configTest.TaskConfigTest

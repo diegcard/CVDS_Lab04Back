@@ -216,9 +216,7 @@ public class TaskService {
      */
     public int deleteAllTasks() {
         List<Task> tasks = getAllTasks();
-        for (Task task : tasks) {
-            deleteTask(task.getId());
-        }
+        tasks.forEach(task -> deleteTask(task.getId()));
         return tasks.size();
     }
 
