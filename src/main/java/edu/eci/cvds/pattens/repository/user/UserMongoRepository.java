@@ -18,6 +18,7 @@ public interface UserMongoRepository extends UserRepository, MongoRepository<Use
      * @param id the ID of the User to check.
      * @return true if the User exists, false otherwise.
      */
+    @Override
     default boolean existsById(String id) {
         User user = findUserById(id);
         return user != null;
@@ -53,6 +54,8 @@ public interface UserMongoRepository extends UserRepository, MongoRepository<Use
             user.setId(generateId());
         }
         user.setCreationDate(LocalDate.now());
+        user.setLastLogin(null);
+        user.setTasks(null);
         save(user);
         return user;
     }
@@ -81,10 +84,25 @@ public interface UserMongoRepository extends UserRepository, MongoRepository<Use
      * Throws an exception if the User does not exist.
      * @param id the ID of the User to delete.
      */
+    @Override
     default void deleteUserById(String id) {
         if (!existsById(id)) {
             throw new RuntimeException("User not found");
         }
         deleteById(id);
+    }
+
+    /**
+     * Updates an existing User.
+     * if the User is not found, throw an exception
+     * @param user the User to update
+     */
+    @Override
+    default User updateUser(User user) {
+        if (!existsById(user.getId())) {
+            throw new RuntimeException("User not found");
+        }
+        save(user);
+        return user;
     }
 }

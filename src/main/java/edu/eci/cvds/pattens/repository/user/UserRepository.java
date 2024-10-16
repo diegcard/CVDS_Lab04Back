@@ -9,6 +9,7 @@ import java.util.List;
 public interface UserRepository {
     User saveUser(User user);
     User findUserById(String id);
+    User updateUser(User user);
     List<User> findAllUsers();
     boolean existsById(String id);
     boolean existsByUsername(String username);
