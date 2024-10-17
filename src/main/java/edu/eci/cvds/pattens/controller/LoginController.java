@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.controller;
 
+import edu.eci.cvds.pattens.exception.UserExcepion;
 import edu.eci.cvds.pattens.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,10 +28,14 @@ public class LoginController {
             cookie.setPath("/");
             response.addCookie(cookie);
             return ResponseEntity.status(200).body(token);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Internal server error");
+            if (e instanceof UserExcepion.UserNotFoundException) {
+                return ResponseEntity.status(404).body("User not found");
+            }
+            if (e instanceof UserExcepion.UserIncorrectPasswordException) {
+                return ResponseEntity.status(409).body("Incorrect password");
+            }
+            return ResponseEntity.status(500).body("Unknown server error");
         }
     }
 }
