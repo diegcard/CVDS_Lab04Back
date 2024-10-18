@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.repositoryTest;
 
+import edu.eci.cvds.pattens.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -18,6 +19,9 @@ import edu.eci.cvds.pattens.repository.task.TaskTextRepository;
 
 class TaskTextRepositoryTest {
 
+    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now(), null);
+    
     private TaskTextRepository repository;
     private ObjectMapper objectMapper;
 
@@ -52,7 +56,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testFindTaskById() {
-        Task task = new Task("30","Task 1", "Description 1",false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("30","Task 1", "Description 1",false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
         Task savedTask = repository.saveTask(task);
         Task foundTask = repository.findTaskById(task.getId());
 
@@ -63,8 +67,8 @@ class TaskTextRepositoryTest {
 
     @Test
     void testFindAllTasks() {
-        repository.saveTask(new Task("1","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
-        repository.saveTask(new Task("2","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        repository.saveTask(new Task("1","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2));
+        repository.saveTask(new Task("2","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2));
 
         List<Task> tasks = repository.findAllTasks();
 
@@ -73,7 +77,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testDeleteTask() {
-        Task task = repository.saveTask(new Task("3","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        Task task = repository.saveTask(new Task("3","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2));
 
         repository.deleteTask(task);
 
@@ -82,7 +86,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testUpdateTask() {
-        Task task = repository.saveTask(new Task("4","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        Task task = repository.saveTask(new Task("4","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1));
 
         task.setNameTask("Updated");
         task.setDescriptionTask("Updated description");
@@ -97,7 +101,7 @@ class TaskTextRepositoryTest {
 
     @Test
     void testExistsById() {
-        Task task = repository.saveTask(new Task("5","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()));
+        Task task = repository.saveTask(new Task("5","Task 1", "Description 1",false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1));
 
         assertTrue(repository.existsById(task.getId()));
         assertFalse(repository.existsById("non-existent-id"));

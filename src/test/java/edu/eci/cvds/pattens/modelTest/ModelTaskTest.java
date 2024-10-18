@@ -1,6 +1,7 @@
 package edu.eci.cvds.pattens.modelTest;
 
 import edu.eci.cvds.pattens.model.Task;
+import edu.eci.cvds.pattens.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,5 +78,12 @@ public class ModelTaskTest {
     public void shouldSetAndGetFinishDate() {
         task.setFinishDate(LocalDate.now());
         assertEquals(LocalDate.now(), task.getFinishDate());
+    }
+
+    @Test
+    public void shouldSetAndGetUser() {
+        User user = new User();
+        task.setUser(user);
+        assertEquals(user, task.getUser());
     }
 }
