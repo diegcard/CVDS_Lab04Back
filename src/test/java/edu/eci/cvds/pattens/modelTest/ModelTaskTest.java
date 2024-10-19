@@ -83,7 +83,8 @@ public class ModelTaskTest {
     @Test
     public void shouldSetAndGetUser() {
         User user = new User();
-        task.setUser(user);
-        assertEquals(user, task.getUser());
+        user.setId("123");
+        task.setUser("123");
+        assertEquals(user.getId(), task.getUser());
     }
 }

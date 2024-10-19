@@ -19,8 +19,8 @@ import static org.mockito.Mockito.*;
 
 public class TaskControllerTest {
 
-    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
-    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now(), null);
+    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
+    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now());
 
     @Mock
     private TaskService taskService;
@@ -36,8 +36,8 @@ public class TaskControllerTest {
     @Test
     public void shouldReturnAllTasks() throws Exception {
         List<Task> tasks = Arrays.asList(
-                new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1),
-                new Task("124", "Test Task 2", "This is a test task 2", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2)
+                new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123"),
+                new Task("124", "Test Task 2", "This is a test task 2", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124")
         );
         when(taskService.getAllTasks()).thenReturn(tasks);
         ResponseEntity<?> response = taskController.getAllTasks();
@@ -47,8 +47,8 @@ public class TaskControllerTest {
     @Test
     public void shouldReturnAllTasksWhenServiceReturnsTasks() throws Exception {
         List<Task> tasks = Arrays.asList(
-                new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1),
-                new Task("124", "Test Task 2", "This is a test task 2", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2)
+                new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123"),
+                new Task("124", "Test Task 2", "This is a test task 2", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124")
         );
         when(taskService.getAllTasks()).thenReturn(tasks);
         ResponseEntity<?> response = taskController.getAllTasks();
@@ -65,7 +65,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldReturnTaskById() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.getTaskById("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.getTaskById("123");
         assertEquals(task, response.getBody());
@@ -74,7 +74,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldReturnTaskWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.getTaskById("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.getTaskById("123");
         assertEquals(task, response.getBody());
@@ -90,7 +90,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldCreateTask() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2);
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskService.createTask(task)).thenReturn(task);
         ResponseEntity<?> response = taskController.createTask(task);
         assertEquals(task, response.getBody());
@@ -98,7 +98,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldCreateTaskWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2);
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskService.createTask(task)).thenReturn(task);
         ResponseEntity<?> response = taskController.createTask(task);
         assertEquals(task, response.getBody());
@@ -106,7 +106,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenServiceThrowsExceptionOnCreateTask() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2);
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskService.createTask(task)).thenThrow(new RuntimeException());
         ResponseEntity<?> response = taskController.createTask(task);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -114,7 +114,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldUpdateTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.updateTask(task)).thenReturn(task);
         ResponseEntity<?> response = taskController.updateTask(task);
         assertEquals(task, response.getBody());
@@ -122,7 +122,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldUpdateTaskWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.updateTask(task)).thenReturn(task);
         ResponseEntity<?> response = taskController.updateTask(task);
         assertEquals(task, response.getBody());
@@ -130,7 +130,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenServiceThrowsExceptionOnUpdateTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.updateTask(task)).thenThrow(new RuntimeException());
         ResponseEntity<?> response = taskController.updateTask(task);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -153,7 +153,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldMarkTaskAsDone() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskService.doneTask("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.doneTask("123");
         assertEquals(task, response.getBody());
@@ -161,7 +161,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldMarkTaskAsDoneWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario2);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskService.doneTask("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.doneTask("123");
         assertEquals(task, response.getBody());
@@ -176,7 +176,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldMarkTaskAsUndoneWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.undoneTask("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.undoneTask("123");
         assertEquals(task, response.getBody());
@@ -191,7 +191,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldMarkTaskAsUndone() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.undoneTask("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.undoneTask("123");
         assertEquals(task, response.getBody());
@@ -199,7 +199,7 @@ public class TaskControllerTest {
 
     @Test
     public void shouldChangeIsCompletedSuccessfully() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), usuario1);
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskService.changeIsCompleted("123")).thenReturn(task);
         ResponseEntity<?> response = taskController.changeIsCompleted("123");
         assertEquals(task, response.getBody());

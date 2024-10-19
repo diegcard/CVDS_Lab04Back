@@ -29,7 +29,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldCreateUser() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.saveUser(user)).thenReturn(user);
         User saveUser = userService.save(user);
         assertEquals(user, saveUser);
@@ -38,14 +38,14 @@ public class UserServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenCreateUserWithExistingId() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.saveUser(user)).thenThrow(new RuntimeException());
         assertThrows(RuntimeException.class, () -> userService.save(user));
     }
 
     @Test
     public void shouldThrowExceptionWhenThereAreDataIntegrityViolationExceptions(){
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.saveUser(user)).thenThrow(new RuntimeException());
         assertThrows(RuntimeException.class, () -> userService.save(user));
     }
@@ -59,14 +59,14 @@ public class UserServiceTest {
 
     @Test
     public void shouldGetUserById() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.findUserById("123")).thenReturn(user);
         assertEquals(user, userService.getUserById("123"));
     }
 
     @Test
     public void shouldGetUserByUsername() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.findUserByUsername("Test User 1")).thenReturn(user);
         assertEquals(user, userService.getUserByUsername("Test User 1"));
     }
@@ -79,7 +79,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldUdateUser() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.existsById("123")).thenReturn(true);
         when(userRepository.saveUser(user)).thenReturn(user);
         assertEquals(user, userService.save(user));
@@ -88,7 +88,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenThereAreTransactionSystemExceptionsOnUpdateTask() throws Exception {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.existsById("123")).thenReturn(true);
         when(userRepository.saveUser(user)).thenThrow(new RuntimeException());
         assertThrows(Exception.class, () -> userService.save(user));
@@ -96,14 +96,14 @@ public class UserServiceTest {
 
     @Test
     public void shouldThrowExceptionwhenSaveAnUserWithAnExistingUsername() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.existsByUsername("Test User 1")).thenReturn(true);
         assertThrows(RuntimeException.class, () -> userService.save(user));
     }
 
     @Test
     public void shouldThrowExceptionwhenSaveAnUserWithAnExistingEmail() {
-        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User user = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userRepository.existsByEmail("testuser1@mail.escuelaing.com")).thenReturn(true);
         assertThrows(RuntimeException.class, () -> userService.save(user));
     }
