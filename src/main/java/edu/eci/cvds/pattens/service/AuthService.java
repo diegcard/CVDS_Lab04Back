@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 
+import java.time.LocalDate;
+
 @Service
 public class AuthService {
 
@@ -21,7 +23,8 @@ public class AuthService {
         if (!user.getPassword().equals(password)) {
             throw new UserExcepion.UserIncorrectPasswordException("Incorrect password");
         }
-
+        
+        user.setLastLogin(LocalDate.now());
         String token = JWT.create()
                 .withClaim("id", user.getId())
                 .withClaim("username", user.getUsername())
