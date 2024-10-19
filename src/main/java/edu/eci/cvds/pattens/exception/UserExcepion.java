@@ -11,12 +11,6 @@ public class UserExcepion extends Exception{
         }
     }
 
-    public class UserAlreadyExistsException extends UserExcepion{
-        public UserAlreadyExistsException(String message){
-            super(message);
-        }
-    }
-
     public static class UserIncorrectPasswordException extends UserExcepion{
         public UserIncorrectPasswordException(String message){
             super(message);
