@@ -26,5 +26,5 @@ public class Task {
     private LocalDate creationDate; //dd-mm-yyyy
     private LocalDate estimatedTime; //dd-mm-yyyy
     private LocalDate finishDate; //dd-mm-yyyy
-    private User user;
+    private String user;
 }

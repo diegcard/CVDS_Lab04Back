@@ -1,10 +1,14 @@
 package edu.eci.cvds.pattens.service;
 
+import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
 
 /**
  * UserService class provides service methods for User-related operations.
@@ -14,6 +18,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     /**
      * Saves a User to the database.
@@ -57,7 +64,31 @@ public class UserService {
         userRepository.deleteUserById(id);
     }
 
+    /**
+     * get user by his username
+     * @param username
+     * @return
+     */
     public User getUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    /**
+     * get all user tasks by user id
+     * @param id
+     * @return a list of all tasks of the user
+     */
+    public List<Task> getAllTaskByUserId(String id) {
+        if(!userRepository.existsById(id)){
+            throw new RuntimeException("User not found");
+        }
+        List<Task> tasks = taskRepository.findAllTasks();
+        List<Task> userTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getUser().equals(id)) {
+                userTasks.add(task);
+            }
+        }
+        return userTasks;
     }
 }

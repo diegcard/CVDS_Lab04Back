@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.repository.user;
 
+import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import org.springframework.stereotype.Component;
 

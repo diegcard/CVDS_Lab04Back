@@ -25,5 +25,4 @@ public class User {
     private String fullName;
     private LocalDate creationDate;
     private LocalDate lastLogin;
-    private List<Task> tasks;
 }
