@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 /**
@@ -61,6 +62,9 @@ public class TaskController {
     public ResponseEntity<?> createTask(@RequestBody Task task) {
         HashMap<String, Object> response = new HashMap<>();
         try {
+            task.setIsCompleted(false);
+            task.setCreationDate(LocalDate.now());
+            task.setId(null);
             return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
         } catch (Exception e) {
             response.put("error", e.getMessage());
