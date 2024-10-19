@@ -23,12 +23,12 @@ public class AuthService {
         }
 
         String token = JWT.create()
+                .withClaim("id", user.getId())
                 .withClaim("username", user.getUsername())
                 .withClaim("email", user.getEmail())
                 .withClaim("fullName", user.getFullName())
                 .withClaim("creationDate", user.getCreationDate().toString())
                 .sign(Algorithm.HMAC256("secret"));
-
         return token;
     }
 
