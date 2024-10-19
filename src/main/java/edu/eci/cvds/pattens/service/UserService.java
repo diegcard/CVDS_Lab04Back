@@ -6,6 +6,7 @@ import edu.eci.cvds.pattens.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import edu.eci.cvds.pattens.repository.task.TaskRepository;
@@ -90,5 +91,15 @@ public class UserService {
             }
         }
         return userTasks;
+    }
+
+    /**
+     * Update the lastLogin of the userto the current date
+     * @param id
+     */
+    public void updateLastLogin(String id) {
+        User user = userRepository.findUserById(id);
+        user.setLastLogin(LocalDate.now());
+        userRepository.updateUser(user);
     }
 }
