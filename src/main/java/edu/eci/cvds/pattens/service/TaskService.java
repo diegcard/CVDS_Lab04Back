@@ -60,6 +60,7 @@ public class TaskService {
     @Transactional
     public Task createTask(Task task) throws Exception, DataIntegrityViolationException, RuntimeException {
         try {
+            task.setId(generateId());
             if (taskRepository.existsById(task.getId())) {
                 throw new DataIntegrityViolationException("Task already exists");
             }
@@ -80,6 +81,15 @@ public class TaskService {
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Error creating task");
         }
+    }
+
+    private String generateId() {
+        Random random = new Random();
+        String id = "";
+        for (int i = 0; i < 10; i++) {
+            id += random.nextInt(10);
+        }
+        return id;
     }
 
     /**
