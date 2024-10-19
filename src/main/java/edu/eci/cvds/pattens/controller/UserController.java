@@ -83,4 +83,21 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    /**
+     * Get all task by user id
+     * @param id
+     * @return a list of all tasks of the user
+     */
+    @GetMapping("/getTasks/{id}")
+    public ResponseEntity<?> getAllTaskByUserId(@PathVariable String id) {
+        HashMap<String, String> response;
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getAllTaskByUserId(id));
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }

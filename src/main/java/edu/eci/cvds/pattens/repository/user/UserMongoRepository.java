@@ -1,9 +1,11 @@
 package edu.eci.cvds.pattens.repository.user;
 
+import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,7 +57,6 @@ public interface UserMongoRepository extends UserRepository, MongoRepository<Use
         }
         user.setCreationDate(LocalDate.now());
         user.setLastLogin(null);
-        user.setTasks(null);
         save(user);
         return user;
     }

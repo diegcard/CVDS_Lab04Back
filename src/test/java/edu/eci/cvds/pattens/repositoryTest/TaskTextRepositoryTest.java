@@ -19,8 +19,8 @@ import edu.eci.cvds.pattens.repository.task.TaskTextRepository;
 
 class TaskTextRepositoryTest {
 
-    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), null);
-    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now(), null);
+    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
+    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now());
     
     private TaskTextRepository repository;
     private ObjectMapper objectMapper;
