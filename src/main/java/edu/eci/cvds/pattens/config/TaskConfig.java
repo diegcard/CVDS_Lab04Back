@@ -3,8 +3,8 @@ package edu.eci.cvds.pattens.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import edu.eci.cvds.pattens.repository.TaskRepository;
-import edu.eci.cvds.pattens.repository.TaskMongoRepository;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
+import edu.eci.cvds.pattens.repository.task.TaskMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

@@ -28,12 +28,12 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <sonar.projectKey>library</sonar.projectKey>
-        <sonar.projectName>library</sonar.projectName>
+        <sonar.projectKey>TODO</sonar.projectKey>
+        <sonar.projectName>TODO</sonar.projectName>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>src//configurators/*</sonar.coverage.exclusions>
-        <sonar.token>sqa_d77ef3fad1f73f23b935ecd576df88b4553a0090</sonar.token>
+        <sonar.token>sqa_5bee0a07dc598e2630bda96040b03300017680eb</sonar.token>
     </properties>
     <packaging>jar</packaging>
     <dependencies>
@@ -67,6 +67,12 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>5.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
         </dependency>
     </dependencies>
 

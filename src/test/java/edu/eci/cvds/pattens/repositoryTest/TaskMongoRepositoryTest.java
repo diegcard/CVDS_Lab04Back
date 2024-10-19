@@ -2,7 +2,7 @@ package edu.eci.cvds.pattens.repositoryTest;
 
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskMongoRepository;
+import edu.eci.cvds.pattens.repository.task.TaskMongoRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.springframework.data.domain.Example;
@@ -37,7 +37,7 @@ public class TaskMongoRepositoryTest {
             }
 
             @Override
-            public Page<Task> findAll(Pageable pageable) {
+                public Page<Task> findAll(Pageable pageable) {
                 return null;
             }
 

@@ -1,7 +1,8 @@
 package edu.eci.cvds.pattens.service;
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskRepository;
+import edu.eci.cvds.pattens.model.User;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
+import edu.eci.cvds.pattens.service.UserService;
 
 /**
  * Service class for managing tasks.
@@ -19,6 +21,9 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * Retrieves a task by its ID.
@@ -67,6 +72,10 @@ public class TaskService {
             if(task.getEstimatedTime().isBefore(LocalDate.now())){
                 throw new RuntimeException("Invalid time");
             }
+            User user = userService.getUserById(task.getUser());
+            if(user == null){
+                throw new RuntimeException("User not found");
+            }
             return taskRepository.saveTask(task);
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Error creating task");
@@ -95,6 +104,10 @@ public class TaskService {
             if(task.getEstimatedTime().isBefore(LocalDate.now())){
                 throw new RuntimeException("Invalid time");
             }
+            User user = userService.getUserById(task.getUser());
+            if(user == null){
+                throw new RuntimeException("User not found");
+            }
             return taskRepository.updateTask(task);
         } catch (TransactionSystemException e) {
             throw new TransactionSystemException("Error creating task");
@@ -111,6 +124,8 @@ public class TaskService {
         if(task == null){
             throw new RuntimeException("Task not found");
         }
+        //User user = task.getUser();
+        //user.removeTask(task);
         taskRepository.deleteTask(task);
     }
 
@@ -216,9 +231,7 @@ public class TaskService {
      */
     public int deleteAllTasks() {
         List<Task> tasks = getAllTasks();
-        for (Task task : tasks) {
-            deleteTask(task.getId());
-        }
+        tasks.forEach(task -> deleteTask(task.getId()));
         return tasks.size();
     }
 

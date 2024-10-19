@@ -1,8 +1,10 @@
 package edu.eci.cvds.pattens.serviceTest;
 
 import edu.eci.cvds.pattens.model.Task;
-import edu.eci.cvds.pattens.repository.TaskRepository;
+import edu.eci.cvds.pattens.model.User;
+import edu.eci.cvds.pattens.repository.task.TaskRepository;
 import edu.eci.cvds.pattens.service.TaskService;
+import edu.eci.cvds.pattens.service.UserService;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
@@ -19,17 +21,31 @@ public class TaskServiceTest {
     @Mock
     private TaskRepository taskRepository;
 
+    @Mock
+    private UserService userService; // Add this line
+
     @InjectMocks
     private TaskService taskService;
+
+    private User usuario1;
+    private User usuario2;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        // Initialize test users
+        usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
+        usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja", "User Test 2", LocalDate.now(), LocalDate.now());
+
+        // Set up behavior for userService mock
+        when(userService.getUserById("123")).thenReturn(usuario1);
+        when(userService.getUserById("124")).thenReturn(usuario2);
     }
 
     @Test
     public void shouldCreateTask() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.saveTask(task)).thenReturn(task);
         Task createdTask = taskService.createTask(task);
         assertEquals(task, createdTask);
@@ -38,46 +54,46 @@ public class TaskServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenCreateTaskWithExistingId() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenThereAreDataIntegrityViolationExceptions() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.saveTask(task)).thenThrow(new RuntimeException());
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenCreateTaskWithInvalidPriority() throws Exception{
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"low", 41, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"low", 41, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenCreateTaskWithInvalidDifficultLevel() throws Exception{
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"f", 4, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"f", 4, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenThereAreTransactionSystemExceptions() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.saveTask(task)).thenThrow(new RuntimeException());
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenCreateTaskWithInvalidEstimatedTime() throws Exception{
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now().minusDays(1), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now().minusDays(1), LocalDate.now(), "124");
         assertThrows(Exception.class, () -> taskService.createTask(task));
     }
 
     @Test
     public void shouldUpdateTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.updateTask(task)).thenReturn(task);
         Task updatedTask = taskService.updateTask(task);
@@ -87,28 +103,28 @@ public class TaskServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenUpdateTaskWithNonExistingId() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById("125")).thenReturn(false);
         assertThrows(Exception.class, () -> taskService.updateTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenUpdateTaskWithInvalidDifficultLevel() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "f", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "f", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         assertThrows(Exception.class, () -> taskService.updateTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenUpdateTaskWithInvalidriority() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "low", -1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "low", -1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById("123")).thenReturn(true);
         assertThrows(Exception.class, () -> taskService.updateTask(task));
     }
 
     @Test
     public void shouldThrowExceptionWhenThereAreTransactionSystemExceptionsOnUpdateTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.updateTask(task)).thenThrow(new RuntimeException());
         assertThrows(Exception.class, () -> taskService.updateTask(task));
@@ -116,7 +132,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenThereAreDataIntegrityViolationExceptionOnUpdateTask() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.updateTask(task)).thenThrow(new RuntimeException());
         assertThrows(Exception.class, () -> taskService.updateTask(task));
@@ -124,14 +140,14 @@ public class TaskServiceTest {
 
     @Test
     public void shouldThrowExceptionWhenUpdateTaskWithInvalidEstimatedTime() throws Exception {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "low", 1, LocalDate.now(), LocalDate.now().minusDays(1), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "low", 1, LocalDate.now(), LocalDate.now().minusDays(1), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         assertThrows(Exception.class, () -> taskService.updateTask(task));
     }
 
     @Test
     public void shouldDeleteTask() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         doNothing().when(taskRepository).deleteTask(task);
@@ -147,7 +163,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldMarkTaskAsCompleted() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -165,7 +181,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldMarkTaskAsNotCompleted() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -181,7 +197,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldChangeTaskToNotCompletedWhenCompleted() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -197,7 +213,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldToggleTaskCompletionStatusWhenTaskExists() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -213,7 +229,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldSetFinishDateWhenTaskIsCompleted() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -224,7 +240,7 @@ public class TaskServiceTest {
 
     @Test
     public void shouldRemoveFinishDateWhenTaskIsNotCompleted() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", true, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         when(taskRepository.updateTask(task)).thenReturn(task);
@@ -250,8 +266,8 @@ public class TaskServiceTest {
     @Test
     public void shouldReturnCorrectTaskCountWhenTasksExist() {
         List<Task> tasks = Arrays.asList(
-            new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now()),
-            new Task("124", "Test Task 2", "This is a test task 2", false, "medium", 2, LocalDate.now(), LocalDate.now(), LocalDate.now())
+            new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123"),
+            new Task("124", "Test Task 2", "This is a test task 2", false, "medium", 2, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124")
         );
         when(taskRepository.findAllTasks()).thenReturn(tasks);
         int taskCount = taskService.countTasks();
@@ -269,7 +285,7 @@ public class TaskServiceTest {
     // Cuando lo consulto a nivel de servicio, Entonces la consulta será exitosa validando el campo id.
     @Test
     public void shouldFindTaskById() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         Task foundTask = taskService.getTaskById("123");
@@ -279,7 +295,7 @@ public class TaskServiceTest {
     @Test
     public void shouldRetrieveTaskWhenIdExists() {
         String taskId = "123";
-        Task task = new Task(taskId, "Test Task", "This is a test task", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task(taskId, "Test Task", "This is a test task", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.existsById(taskId)).thenReturn(true);
         when(taskRepository.findTaskById(taskId)).thenReturn(task);
         Task retrievedTask = taskService.getTaskById(taskId);
@@ -299,7 +315,7 @@ public class TaskServiceTest {
     // Entonces la creación será exitosa.
     @Test
     public void shouldReturnTaskWhenServiceReturnsTask() throws Exception {
-        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("125", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.saveTask(task)).thenReturn(task);
         Task createdTask = taskService.createTask(task);
         assertEquals(task, createdTask);
@@ -310,7 +326,7 @@ public class TaskServiceTest {
     // Entonces la eliminación será exitosa.
     @Test
     public void shouldDeleteTask1() {
-        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         when(taskRepository.findTaskById("123")).thenReturn(task);
         doNothing().when(taskRepository).deleteTask(task);
@@ -321,7 +337,7 @@ public class TaskServiceTest {
     // Dado que tengo 1 tarea registrada, Cuándo la elimino y consulto a nivel de servicio, Entonces el resultado de la consulta no retornará ningún resultado.
     @Test
     public void shouldDeleteTask2() throws Exception{
-        Task task = new Task("123", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now());
+        Task task = new Task("123", "Test Task 3", "This is a test task 3", false,"high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "123");
         when(taskRepository.saveTask(task)).thenReturn(task);
         Task createdTask = taskService.createTask(task);
         assertEquals(task, createdTask);
