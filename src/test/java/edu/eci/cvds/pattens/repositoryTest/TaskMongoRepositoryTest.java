@@ -37,7 +37,7 @@ public class TaskMongoRepositoryTest {
             }
 
             @Override
-            public Page<Task> findAll(Pageable pageable) {
+                public Page<Task> findAll(Pageable pageable) {
                 return null;
             }
 
