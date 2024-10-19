@@ -43,7 +43,6 @@ public class UserController {
         try {
             user.setId(null);
             user.setLastLogin(null);
-            user.setTasks(null);
             user.setCreationDate(LocalDate.now());
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
         } catch (Exception e) {
