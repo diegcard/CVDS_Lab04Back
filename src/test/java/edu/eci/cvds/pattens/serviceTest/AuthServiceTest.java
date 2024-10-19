@@ -31,7 +31,7 @@ public class AuthServiceTest {
 
     @Test
     public void shouldLoginUserSuccessfully() throws UserExcepion.UserNotFoundException, UserExcepion.UserIncorrectPasswordException {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), new ArrayList<>());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
         when(userService.getUserByUsername("username")).thenReturn(user);
         String token = authService.loginUser("username", "password");
         assertNotNull(token);
@@ -45,7 +45,7 @@ public class AuthServiceTest {
 
     @Test
     public void shouldThrowUserIncorrectPasswordExceptionWhenPasswordIsIncorrect() {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), new ArrayList<>());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
         when(userService.getUserByUsername("username")).thenReturn(user);
         assertThrows(UserExcepion.UserIncorrectPasswordException.class, () -> authService.loginUser("username", "wrongpassword"));
     }

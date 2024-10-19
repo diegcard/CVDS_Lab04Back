@@ -31,7 +31,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateUser() {
-        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userService.save(usuario1)).thenReturn(usuario1);
         ResponseEntity<?> response = userController.saveUser(usuario1);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -41,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldGetById() {
-        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userService.getUserById("123")).thenReturn(usuario1);
         ResponseEntity<?> response = userController.getUserById("123");
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -51,7 +51,7 @@ public class UserControllerTest {
 
     @Test
     public void deleteUser() {
-        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userService.getUserById("123")).thenReturn(usuario1);
         ResponseEntity<?> response = userController.deleteUser("123");
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -66,7 +66,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenCreateUserWithExistingId() {
-        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), null);
+        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
         when(userService.save(usuario1)).thenThrow(new RuntimeException());
         ResponseEntity<?> response = userController.saveUser(usuario1);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -81,6 +81,26 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnBadRequestWhenDeleteUser() {
+        when(userService.getUserById("123")).thenThrow(new RuntimeException());
+        ResponseEntity<?> response = userController.deleteUser("123");
+    }
+
+    @Test
+    public void shouldReturnAllTaskByUserId123() {
+        User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
+        when(userService.getUserById("123")).thenReturn(usuario1);
+        ResponseEntity<?> response = userController.getAllTaskByUserId("123");
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenGetAllTaskByUserId() {
+        when(userService.getUserById("123")).thenThrow(new RuntimeException());
+        ResponseEntity<?> response = userController.getAllTaskByUserId("123");
+    }
+
+    @Test
+    public void shouldReturnBadRequestWhenDeleteUserById() {
         when(userService.getUserById("123")).thenThrow(new RuntimeException());
         ResponseEntity<?> response = userController.deleteUser("123");
     }
