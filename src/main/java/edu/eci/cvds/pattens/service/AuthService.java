@@ -23,8 +23,7 @@ public class AuthService {
         if (!user.getPassword().equals(password)) {
             throw new UserExcepion.UserIncorrectPasswordException("Incorrect password");
         }
-        
-        user.setLastLogin(LocalDate.now());
+        userService.updateLastLogin(user.getId());
         String token = JWT.create()
                 .withClaim("id", user.getId())
                 .withClaim("username", user.getUsername())
