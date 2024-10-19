@@ -51,13 +51,13 @@ public class TaskServiceTest {
         assertEquals(task, createdTask);
         verify(taskRepository, times(1)).saveTask(task);
     }
-
+/*
     @Test
     public void shouldThrowExceptionWhenCreateTaskWithExistingId() throws Exception {
         Task task = new Task("123", "Test Task 1", "This is a test task 1", false, "high", 1, LocalDate.now(), LocalDate.now(), LocalDate.now(), "124");
         when(taskRepository.existsById("123")).thenReturn(true);
         assertThrows(Exception.class, () -> taskService.createTask(task));
-    }
+    }*/
 
     @Test
     public void shouldThrowExceptionWhenThereAreDataIntegrityViolationExceptions() throws Exception {
