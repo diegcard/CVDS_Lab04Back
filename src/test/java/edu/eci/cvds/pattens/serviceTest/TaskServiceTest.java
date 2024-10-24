@@ -250,9 +250,17 @@ public class TaskServiceTest {
 
 
     @Test
-    public void shouldGenerateRandomTasksWithinRange() {
+    public void shouldGenerateRandomTasksWithinValidRange() {
+        when(userService.getAllUser()).thenReturn(Arrays.asList(usuario1, usuario2));
         int generatedTasks = taskService.generateRandomTasks();
         assertTrue(generatedTasks >= 100 && generatedTasks <= 1000);
+    }
+
+    @Test
+    public void shouldGenerateTasksForAllUsers() {
+        when(userService.getAllUser()).thenReturn(Arrays.asList(usuario1, usuario2));
+        int generatedTasks = taskService.generateRandomTasks();
+        verify(taskRepository, atLeast(1)).saveTask(any(Task.class));
     }
 
     @Test
