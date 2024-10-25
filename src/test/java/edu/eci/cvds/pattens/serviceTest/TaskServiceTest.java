@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.serviceTest;
 
+import edu.eci.cvds.pattens.model.Role;
 import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.repository.task.TaskRepository;
@@ -35,8 +36,8 @@ public class TaskServiceTest {
         MockitoAnnotations.openMocks(this);
 
         // Initialize test users
-        usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now());
-        usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja", "User Test 2", LocalDate.now(), LocalDate.now());
+        usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja", "User Test 1", LocalDate.now(), LocalDate.now(), Role.ADMIN);
+        usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja", "User Test 2", LocalDate.now(), LocalDate.now(), Role.USER);
 
         // Set up behavior for userService mock
         when(userService.getUserById("123")).thenReturn(usuario1);
