@@ -33,11 +33,6 @@ public class UserController {
         return userService.getAllUser();
     }
 
-    @GetMapping("/bienvenido")
-    public String getAllUsers1() {
-        return "Hola mundo";
-    }
-
     /**
      * Creates a new User.
      * @param user the User to create.

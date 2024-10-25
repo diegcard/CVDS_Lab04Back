@@ -28,7 +28,7 @@ public class WebSecurityConfig {
         /*http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/users/bienvenido", "/home", "/api/login").permitAll()  // Permite el login sin autenticación
+                        .requestMatchers("/api/users/create", "/home", "/api/login").permitAll()  // Permite el login sin autenticación
                         .anyRequest().authenticated()  // Protege otras rutas
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Deshabilita sesiones (usamos JWT)
