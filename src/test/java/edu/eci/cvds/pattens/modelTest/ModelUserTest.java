@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.modelTest;
 
+import edu.eci.cvds.pattens.model.Role;
 import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,7 +72,7 @@ public class ModelUserTest {
 
     @Test
     public void shouldCreateUserWithValidFields() {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), Role.ADMIN);
         assertNotNull(user.getId());
         assertEquals("username", user.getUsername());
         assertEquals("email@example.com", user.getEmail());
@@ -83,7 +84,7 @@ public class ModelUserTest {
 
     @Test
     public void shouldUpdateUserEmailSuccessfully() {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), Role.ADMIN);
         user.setEmail("newemail@example.com");
         assertEquals("newemail@example.com", user.getEmail());
     }
@@ -91,8 +92,14 @@ public class ModelUserTest {
 
     @Test
     public void shouldReturnCorrectFullName() {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), Role.USER);
         assertEquals("Full Name", user.getFullName());
+    }
+
+    @Test
+    public void shouldReturnCorrectRole() {
+        User user = new User("1", "username", "email@exame.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), Role.ADMIN);
+        assertEquals(Role.ADMIN, user.getRole());
     }
 
 }

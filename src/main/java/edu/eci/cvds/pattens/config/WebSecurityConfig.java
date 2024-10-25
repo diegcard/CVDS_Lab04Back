@@ -39,7 +39,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(); // En tu caso ya estás manejando los usuarios en tu base de datos.
+        return new InMemoryUserDetailsManager(); // Implementación de UserDetailsService
     }
 
     @Bean

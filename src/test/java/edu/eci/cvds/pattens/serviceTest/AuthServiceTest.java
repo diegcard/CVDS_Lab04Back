@@ -1,6 +1,7 @@
 package edu.eci.cvds.pattens.serviceTest;
 
 import edu.eci.cvds.pattens.exception.UserExcepion;
+import edu.eci.cvds.pattens.model.Role;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.service.AuthService;
 import edu.eci.cvds.pattens.service.UserService;
@@ -45,7 +46,7 @@ public class AuthServiceTest {
 
     @Test
     public void shouldThrowUserIncorrectPasswordExceptionWhenPasswordIsIncorrect() {
-        User user = new User("1", "username", "email@example.com", "$2a$10$7QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8", "Full Name", LocalDate.now(), LocalDate.now());
+        User user = new User("1", "username", "email@example.com", "$2a$10$7QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8QJ8", "Full Name", LocalDate.now(), LocalDate.now(), Role.ADMIN);
         when(userService.getUserByUsername("username")).thenReturn(user);
         assertThrows(UserExcepion.UserIncorrectPasswordException.class, () -> authService.loginUser("username", "wrongpassword"));
     }
@@ -66,7 +67,7 @@ public class AuthServiceTest {
 
     @Test
     public void shouldThrowUserIncorrectPasswordExceptionWhenPasswordIsIncorrect1() {
-        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now());
+        User user = new User("1", "username", "email@example.com", "password", "Full Name", LocalDate.now(), LocalDate.now(), Role.USER);
         when(userService.getUserByUsername("username")).thenReturn(user);
         assertThrows(UserExcepion.UserIncorrectPasswordException.class, () -> authService.loginUser("username", "wrongpassword"));
     }
