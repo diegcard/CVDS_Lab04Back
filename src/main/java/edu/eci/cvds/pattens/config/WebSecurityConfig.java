@@ -25,15 +25,22 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
-        http
+        /*http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/api/login").permitAll()  // Permite el login sin autenticación
+                        .requestMatchers("/api/users/bienvenido", "/home", "/api/login").permitAll()  // Permite el login sin autenticación
                         .anyRequest().authenticated()  // Protege otras rutas
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Deshabilita sesiones (usamos JWT)
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);  // Añade el filtro JWT
 
+        return http.build();*/
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/**").permitAll()  // Permite el login sin autenticación
+                        .anyRequest().permitAll()  // Protege otras rutas
+                );
         return http.build();
     }
 
