@@ -1,6 +1,7 @@
 package edu.eci.cvds.pattens.controllerTest;
 
 import edu.eci.cvds.pattens.controller.TaskController;
+import edu.eci.cvds.pattens.model.Role;
 import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.service.TaskService;
@@ -19,8 +20,8 @@ import static org.mockito.Mockito.*;
 
 public class TaskControllerTest {
 
-    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now());
-    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now());
+    User usuario1 = new User("123", "Test User 1", "testuser1@mail.escuelaing.com", "jaja","User Test 1", LocalDate.now(), LocalDate.now(), Role.ADMIN);
+    User usuario2 = new User("124", "Test User 2", "testuser2@mail.com", "jaja","User Test 2", LocalDate.now(), LocalDate.now(),Role.USER);
 
     @Mock
     private TaskService taskService;

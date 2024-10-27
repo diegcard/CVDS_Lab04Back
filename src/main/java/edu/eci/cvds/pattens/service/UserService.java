@@ -4,8 +4,10 @@ import edu.eci.cvds.pattens.model.Task;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import edu.eci.cvds.pattens.repository.task.TaskRepository;
@@ -22,6 +24,8 @@ public class UserService {
     @Autowired
     private TaskRepository taskRepository;
 
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     /**
      * Saves a User to the database.
      * Checks if the User's username or email already exists before saving.
@@ -36,6 +40,8 @@ public class UserService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         return userRepository.saveUser(user);
     }
 
@@ -90,5 +96,15 @@ public class UserService {
             }
         }
         return userTasks;
+    }
+
+    /**
+     * Update the lastLogin of the userto the current date
+     * @param id
+     */
+    public void updateLastLogin(String id) {
+        User user = userRepository.findUserById(id);
+        user.setLastLogin(LocalDate.now());
+        userRepository.updateUser(user);
     }
 }

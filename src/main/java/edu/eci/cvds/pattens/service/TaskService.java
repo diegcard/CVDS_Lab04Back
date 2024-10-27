@@ -45,7 +45,6 @@ public class TaskService {
      * @return a list of all tasks
      */
     public List<Task> getAllTasks() {
-
         return taskRepository.findAllTasks();
 
     }
@@ -100,7 +99,7 @@ public class TaskService {
      * @throws Exception if an error occurs during update or if the task is not found
      */
     @Transactional
-    public Task updateTask(Task task) throws Exception {
+    public Task updateTask(Task task) {
         try {
             if (!taskRepository.existsById(task.getId())) {
                 throw new DataIntegrityViolationException("Task not found");
@@ -201,10 +200,11 @@ public class TaskService {
      * @return the number of tasks created
      */
     public int generateRandomTasks() {
+        List<String> usersId = userService.getAllUser().stream().map(User::getId).toList();
         Random random = new Random();
         int numberTasks = random.nextInt(901) + 100;
         for (int i = 0; i < numberTasks; i++) {
-            Task task = createRandomTask();
+            Task task = createRandomTask(usersId);
             try {
                 taskRepository.saveTask(task);
             } catch (Exception e) {
@@ -219,7 +219,7 @@ public class TaskService {
      *
      * @return the task created
      */
-    private Task createRandomTask() {
+    private Task createRandomTask(List<String> usersId) {
         Random random = new Random();
 
         String[] levels = {"low", "medium", "high"};
@@ -231,6 +231,7 @@ public class TaskService {
         task.setDifficultyLevel(levels[random.nextInt(3)]);
         task.setPriority(random.nextInt(5) + 1);
         task.setEstimatedTime(LocalDate.now().plusDays(random.nextInt(90) + 1));
+        task.setUser(usersId.get(random.nextInt(usersId.size())));
         return task;
     }
 

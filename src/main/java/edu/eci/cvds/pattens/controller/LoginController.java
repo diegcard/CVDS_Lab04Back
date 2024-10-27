@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     @Autowired
     private AuthService authService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody HashMap<String, String> body, HttpServletResponse response){
         String username = body.get("username");
         String password = body.get("password");

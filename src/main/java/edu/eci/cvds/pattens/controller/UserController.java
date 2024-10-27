@@ -1,5 +1,6 @@
 package edu.eci.cvds.pattens.controller;
 
+import edu.eci.cvds.pattens.model.Role;
 import edu.eci.cvds.pattens.model.User;
 import edu.eci.cvds.pattens.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,28 @@ public class UserController {
         try {
             user.setId(null);
             user.setLastLogin(null);
+            user.setRole(Role.USER);
+            user.setCreationDate(LocalDate.now());
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+        } catch (Exception e) {
+            response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    /**
+     * Creates a new Admin.
+     * @param user the User to create.
+     * @return a ResponseEntity with the created User or an error message.
+     */
+    @PostMapping("/create/admin")
+    public ResponseEntity<?> saveAdmin(@RequestBody User user) {
+        HashMap<String, String> response;
+        try {
+            user.setId(null);
+            user.setLastLogin(null);
+            user.setRole(Role.ADMIN);
             user.setCreationDate(LocalDate.now());
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
         } catch (Exception e) {
