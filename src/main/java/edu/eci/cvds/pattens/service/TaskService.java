@@ -45,7 +45,6 @@ public class TaskService {
      * @return a list of all tasks
      */
     public List<Task> getAllTasks() {
-
         return taskRepository.findAllTasks();
 
     }
@@ -100,7 +99,7 @@ public class TaskService {
      * @throws Exception if an error occurs during update or if the task is not found
      */
     @Transactional
-    public Task updateTask(Task task) throws Exception {
+    public Task updateTask(Task task) {
         try {
             if (!taskRepository.existsById(task.getId())) {
                 throw new DataIntegrityViolationException("Task not found");
