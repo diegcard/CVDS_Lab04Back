@@ -33,6 +33,7 @@ public class AuthService {
                 .withClaim("email", user.getEmail())
                 .withClaim("fullName", user.getFullName())
                 .withClaim("creationDate", user.getCreationDate().toString())
+                .withClaim("role", user.getRole().toString())
                 .sign(Algorithm.HMAC256("secret"));
         return token;
     }
