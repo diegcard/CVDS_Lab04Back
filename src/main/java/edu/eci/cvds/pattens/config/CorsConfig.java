@@ -13,10 +13,12 @@ public class CorsConfig implements WebMvcConfigurer {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("*")
+                registry.addMapping("/api/")
+                        .allowedOrigins("localhost:3000/api/",
+                                "https://cvdstodo-gsesacf6egbuhkh3.centralus-01.azurewebsites.net/api/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(false);
             }
         };
     }
