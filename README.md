@@ -17,6 +17,10 @@ donde se asignaron funciones específicas a cada integrante del equipo.
 
 El proyecto se estructuró dividiéndolo en épicas, features, casos de uso y tareas. Nuestra épica principal es la **gestión de tareas**, que se desglosa en dos features: **frontend** y **backend**. Cada feature está asociada a casos de uso específicos, los cuales se han descompuesto en tareas más pequeñas para facilitar su desarrollo y seguimiento.
 
+# Calidad del código
+
+![img.png](Images/imgSonnar.png)
+
 ![img.png](Images/img.png)
 
 # 1.1 Diagrama de clases

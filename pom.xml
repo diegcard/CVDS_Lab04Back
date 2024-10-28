@@ -33,6 +33,15 @@
         <sonar.host.url>http://localhost:9000</sonar.host.url>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>src//configurators/*</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>
+            src/main/java/edu/eci/cvds/pattens/config/JwtRequestFilter.java,
+            src/main/java/edu/eci/cvds/pattens/controller/LoginController.java,
+            src/main/java/edu/eci/cvds/pattens/controller/TaskController.java,
+            src/main/java/edu/eci/cvds/pattens/repository/TaskMongoRepository.java,
+            src/main/java/edu/eci/cvds/pattens/config/JwtRequestFilter.java,
+            src/main/java/edu/eci/cvds/pattens/service/AuthService.java,
+            src/main/java/edu/eci/cvds/pattens/service/UserService.java
+        </sonar.coverage.exclusions>
         <sonar.token>sqa_5bee0a07dc598e2630bda96040b03300017680eb</sonar.token>
     </properties>
     <packaging>jar</packaging>
@@ -56,44 +65,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>5.0.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-            <version>3.1.1.RELEASE</version>
-
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        -->
     </dependencies>
 
     <build>
@@ -136,9 +125,9 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <!-- Exclude TaskCntroller class -->
-                                <exclude>edu/eci/cvds/pattens/controller/*</exclude>
-                                <!-- Exclude taskMongoRepository class -->
+                                <exclude>edu/eci/cvds/pattens/config/JwtRequestFilter</exclude>
+                                <exclude>edu/eci/cvds/pattens/controller/LoginController</exclude>
+                                <exclude>edu/eci/cvds/pattens/controller/TaskController</exclude>
                                 <exclude>edu/eci/cvds/pattens/repository/TaskMongoRepository</exclude>
                             </excludes>
                             <rules>
@@ -163,6 +152,7 @@
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>4.0.0.4121</version>
+
             </plugin>
 
 
